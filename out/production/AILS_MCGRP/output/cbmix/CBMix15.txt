@@ -1,0 +1,29 @@
+Solution{cost=8780, solution=
+Route{dist=286, load=1537, tasks=[N22-Node{22}, E40-Edge{22,21}, E31-Edge{21,16}, E20-Edge{16,10}, E18-Edge{10,11}, E8-Edge{4,11}, N22-Node{22}]}
+Route{dist=148, load=1308, tasks=[N22-Node{22}, E42-Edge{22,23}, E26-Edge{23,13}, N22-Node{22}]}
+Route{dist=225, load=1464, tasks=[N22-Node{22}, E59-Edge{30,39}, E73-Edge{39,38}, E57-Edge{38,29}, N22-Node{22}]}
+Route{dist=271, load=1501, tasks=[N22-Node{22}, E41-Edge{21,29}, E53-Edge{29,28}, E51-Edge{27,28}, E38-Edge{28,20}, N22-Node{22}]}
+Route{dist=232, load=1462, tasks=[N22-Node{22}, E23-Edge{12,13}, E12-Edge{13,6}, E9-Edge{6,5}, N22-Node{22}]}
+Route{dist=300, load=1412, tasks=[N22-Node{22}, E25-Edge{13,14}, E13-Edge{14,7}, E11-Edge{7,6}, N22-Node{22}]}
+Route{dist=268, load=1438, tasks=[N22-Node{22}, E60-Edge{31,32}, E62-Edge{32,40}, E61-Edge{40,31}, E58-Edge{31,30}, N22-Node{22}]}
+Route{dist=378, load=1492, tasks=[N22-Node{22}, E75-Edge{39,40}, E77-Edge{40,41}, E63-Edge{41,32}, E27-Edge{24,14}, N22-Node{22}]}
+Route{dist=157, load=1401, tasks=[N22-Node{22}, E24-Edge{22,12}, E21-Edge{12,11}, E22-Edge{11,17}, N22-Node{22}]}
+Route{dist=358, load=1344, tasks=[N22-Node{22}, E70-Edge{37,36}, E68-Edge{36,35}, E50-Edge{35,26}, N22-Node{22}]}
+Route{dist=307, load=1318, tasks=[N22-Node{22}, E74-Edge{38,49}, E76-Edge{50,39}, E43-Edge{30,22}, N22-Node{22}]}
+Route{dist=213, load=1349, tasks=[N22-Node{22}, E19-Edge{10,15}, E28-Edge{15,16}, E30-Edge{16,17}, N22-Node{22}]}
+Route{dist=364, load=1356, tasks=[N22-Node{22}, E35-Edge{20,19}, E17-Edge{19,9}, E4-Edge{9,2}, N22-Node{22}]}
+Route{dist=357, load=1560, tasks=[N22-Node{22}, E52-Edge{36,27}, E49-Edge{27,26}, E36-Edge{26,19}, N22-Node{22}]}
+Route{dist=302, load=1313, tasks=[N22-Node{22}, E45-Edge{23,31}, E78-Edge{40,51}, E90-Edge{51,50}, N22-Node{22}]}
+Route{dist=371, load=1512, tasks=[N22-Node{22}, E44-Edge{23,24}, E46-Edge{24,32}, E79-Edge{41,52}, E91-Edge{52,51}, N22-Node{22}]}
+Route{dist=407, load=1466, tasks=[N22-Node{22}, E39-Edge{20,29}, E72-Edge{37,48}, E88-Edge{48,49}, E89-Edge{49,50}, N22-Node{22}]}
+Route{dist=467, load=1542, tasks=[N22-Node{22}, E66-Edge{35,34}, E67-Edge{34,43}, E83-Edge{43,46}, E71-Edge{37,38}, N22-Node{22}]}
+Route{dist=423, load=1418, tasks=[N22-Node{22}, E2-Edge{8,1}, E1-Edge{1,2}, E3-Edge{2,3}, N22-Node{22}]}
+Route{dist=312, load=1528, tasks=[N22-Node{22}, E10-Edge{12,5}, E7-Edge{5,4}, E5-Edge{4,3}, E6-Edge{3,10}, E29-Edge{15,20}, N22-Node{22}]}
+Route{dist=410, load=1513, tasks=[N22-Node{22}, E69-Edge{35,44}, E84-Edge{44,47}, E87-Edge{47,48}, E55-Edge{29,30}, N22-Node{22}]}
+Route{dist=280, load=1470, tasks=[N22-Node{22}, E56-Edge{29,37}, E54-Edge{37,28}, E37-Edge{20,21}, N22-Node{22}]}
+Route{dist=116, load=449, tasks=[N22-Node{22}, E32-Edge{17,21}, N22-Node{22}]}
+Route{dist=364, load=1393, tasks=[N22-Node{22}, E16-Edge{10,9}, E14-Edge{9,8}, E15-Edge{8,18}, E33-Edge{18,19}, N22-Node{22}]}
+Route{dist=472, load=1548, tasks=[N22-Node{22}, E82-Edge{44,43}, E80-Edge{43,42}, E48-Edge{33,25}, E34-Edge{25,18}, N22-Node{22}]}
+Route{dist=503, load=1502, tasks=[N22-Node{22}, E85-Edge{46,45}, E65-Edge{42,33}, E47-Edge{25,26}, N22-Node{22}]}
+Route{dist=489, load=1492, tasks=[N22-Node{22}, E64-Edge{34,33}, E81-Edge{42,45}, E86-Edge{46,47}, N22-Node{22}]}
+}

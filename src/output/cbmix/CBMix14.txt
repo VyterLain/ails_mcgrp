@@ -1,0 +1,19 @@
+Solution{cost=8922, solution=
+Route{dist=231, load=1326, tasks=[N11-Node{11}, N2-Node{2}, N1-Node{1}, N10-Node{10}, N21-Node{21}, N22-Node{22}, N11-Node{11}]}
+Route{dist=258, load=1392, tasks=[N11-Node{11}, N12-Node{12}, N23-Node{23}, N24-Node{24}, N25-Node{25}, N11-Node{11}]}
+Route{dist=563, load=1629, tasks=[N11-Node{11}, N73-Node{73}, N76-Node{76}, N77-Node{77}, N67-Node{67}, N58-Node{58}, N47-Node{47}, N11-Node{11}]}
+Route{dist=565, load=1494, tasks=[N11-Node{11}, N17-Node{17}, N18-Node{18}, N29-Node{29}, N30-Node{30}, N19-Node{19}, N11-Node{11}]}
+Route{dist=303, load=1457, tasks=[N11-Node{11}, N34-Node{34}, N54-Node{54}, N53-Node{53}, N33-Node{33}, N11-Node{11}]}
+Route{dist=650, load=1611, tasks=[N11-Node{11}, N56-Node{56}, N78-Node{78}, N80-Node{80}, N81-Node{81}, N71-Node{71}, N11-Node{11}]}
+Route{dist=366, load=1464, tasks=[N11-Node{11}, N13-Node{13}, N14-Node{14}, N16-Node{16}, N6-Node{6}, N5-Node{5}, N11-Node{11}]}
+Route{dist=511, load=1471, tasks=[N11-Node{11}, N32-Node{32}, N52-Node{52}, N72-Node{72}, N85-Node{85}, N86-Node{86}, N74-Node{74}, N11-Node{11}]}
+Route{dist=867, load=1642, tasks=[N11-Node{11}, N51-Node{51}, N82-Node{82}, N83-Node{83}, N84-Node{84}, N94-Node{94}, N93-Node{93}, N92-Node{92}, N61-Node{61}, N11-Node{11}]}
+Route{dist=605, load=1481, tasks=[N11-Node{11}, N3-Node{3}, N4-Node{4}, N7-Node{7}, N8-Node{8}, N9-Node{9}, N20-Node{20}, N15-Node{15}, N11-Node{11}]}
+Route{dist=726, load=1619, tasks=[N11-Node{11}, N42-Node{42}, N62-Node{62}, N63-Node{63}, N64-Node{64}, N43-Node{43}, N31-Node{31}, N11-Node{11}]}
+Route{dist=516, load=1619, tasks=[N11-Node{11}, N45-Node{45}, N46-Node{46}, N48-Node{48}, N59-Node{59}, N57-Node{57}, N11-Node{11}]}
+Route{dist=690, load=1636, tasks=[N11-Node{11}, N89-Node{89}, N90-Node{90}, N91-Node{91}, N79-Node{79}, N68-Node{68}, N11-Node{11}]}
+Route{dist=527, load=1620, tasks=[N11-Node{11}, N37-Node{37}, N39-Node{39}, N40-Node{40}, N41-Node{41}, N28-Node{28}, N26-Node{26}, N11-Node{11}]}
+Route{dist=610, load=1582, tasks=[N11-Node{11}, N66-Node{66}, N69-Node{69}, N70-Node{70}, N60-Node{60}, N49-Node{49}, N50-Node{50}, N27-Node{27}, N11-Node{11}]}
+Route{dist=522, load=1553, tasks=[N11-Node{11}, N44-Node{44}, N55-Node{55}, N65-Node{65}, N75-Node{75}, N88-Node{88}, N87-Node{87}, N11-Node{11}]}
+Route{dist=412, load=1169, tasks=[N11-Node{11}, N36-Node{36}, N38-Node{38}, N35-Node{35}, N11-Node{11}]}
+}

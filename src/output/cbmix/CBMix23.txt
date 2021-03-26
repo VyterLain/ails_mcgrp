@@ -1,0 +1,6 @@
+Solution{cost=780, solution=
+Route{dist=227, load=1268, tasks=[N7-Node{7}, N3-Node{3}, A15-Arc{11,4}, N4-Node{4}, A5-Arc{4,11}, N10-Node{10}, N7-Node{7}]}
+Route{dist=143, load=1417, tasks=[N7-Node{7}, A10-Arc{7,6}, E2-Edge{6,5}, A6-Arc{5,8}, A11-Arc{8,6}, A9-Arc{6,9}, A12-Arc{9,10}, A14-Arc{10,7}, N7-Node{7}]}
+Route{dist=173, load=1261, tasks=[N7-Node{7}, A13-Arc{10,6}, A7-Arc{6,2}, A2-Arc{2,1}, A1-Arc{1,6}, A4-Arc{2,6}, A8-Arc{6,7}, N7-Node{7}]}
+Route{dist=237, load=650, tasks=[N7-Node{7}, E1-Edge{5,1}, A3-Arc{2,3}, N7-Node{7}]}
+}

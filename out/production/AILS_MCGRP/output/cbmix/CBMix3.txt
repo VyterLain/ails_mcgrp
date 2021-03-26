@@ -1,0 +1,15 @@
+Solution{cost=4091, solution=
+Route{dist=228, load=1703, tasks=[N1-Node{1}, A1-Arc{1,2}, A14-Arc{8,9}, A16-Arc{9,16}, N16-Node{16}, E4-Edge{16,23}, N23-Node{23}, A2-Arc{2,1}, N1-Node{1}]}
+Route{dist=342, load=1674, tasks=[N1-Node{1}, A19-Arc{10,17}, N17-Node{17}, A35-Arc{17,18}, A20-Arc{11,5}, A7-Arc{5,6}, A8-Arc{6,5}, N1-Node{1}]}
+Route{dist=315, load=1695, tasks=[N1-Node{1}, A6-Arc{4,5}, N6-Node{6}, A25-Arc{13,12}, A24-Arc{12,19}, A38-Arc{19,12}, N12-Node{12}, A22-Arc{12,11}, N1-Node{1}]}
+Route{dist=323, load=1651, tasks=[N1-Node{1}, A3-Arc{2,3}, A5-Arc{3,8}, A11-Arc{8,2}, A4-Arc{2,8}, A12-Arc{8,3}, A32-Arc{16,9}, A34-Arc{17,10}, N1-Node{1}]}
+Route{dist=525, load=1595, tasks=[N1-Node{1}, A10-Arc{7,14}, A52-Arc{29,28}, N28-Node{28}, A51-Arc{28,29}, A44-Arc{23,24}, E5-Edge{24,18}, N1-Node{1}]}
+Route{dist=40, load=209, tasks=[N1-Node{1}, A9-Arc{7,1}, N1-Node{1}]}
+Route{dist=250, load=1635, tasks=[N1-Node{1}, E1-Edge{4,10}, A18-Arc{10,11}, E2-Edge{11,18}, N18-Node{18}, A36-Arc{18,10}, A15-Arc{9,3}, N1-Node{1}]}
+Route{dist=513, load=1498, tasks=[N1-Node{1}, A40-Arc{19,25}, A55-Arc{31,30}, N30-Node{30}, A45-Arc{24,25}, N25-Node{25}, A46-Arc{25,19}, A39-Arc{19,18}, N1-Node{1}]}
+Route{dist=445, load=1604, tasks=[N1-Node{1}, A50-Arc{27,29}, N29-Node{29}, E8-Edge{29,30}, A53-Arc{30,31}, N31-Node{31}, A54-Arc{31,25}, A47-Arc{25,24}, N1-Node{1}]}
+Route{dist=346, load=1698, tasks=[N1-Node{1}, N10-Node{10}, A37-Arc{18,19}, N19-Node{19}, E3-Edge{19,13}, A23-Arc{12,13}, A21-Arc{11,10}, A17-Arc{10,3}, N1-Node{1}]}
+Route{dist=261, load=1659, tasks=[N1-Node{1}, A28-Arc{14,21}, N21-Node{21}, E7-Edge{21,26}, A48-Arc{26,27}, A49-Arc{27,23}, A13-Arc{8,7}, N1-Node{1}]}
+Route{dist=264, load=1616, tasks=[N1-Node{1}, A27-Arc{14,15}, A30-Arc{15,16}, A33-Arc{16,15}, A31-Arc{15,20}, E6-Edge{22,20}, A41-Arc{20,15}, A29-Arc{15,14}, N1-Node{1}]}
+Route{dist=239, load=1528, tasks=[N1-Node{1}, A42-Arc{21,20}, N22-Node{22}, A43-Arc{22,21}, N14-Node{14}, A26-Arc{14,8}, N1-Node{1}]}
+}

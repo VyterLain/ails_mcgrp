@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact name="AILS_MCGRP:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/AILS_MCGRP_jar</output-path>
+    <root id="root">
+      <element id="archive" name="AILS_MCGRP.jar">
+        <element id="module-output" name="AILS_MCGRP" />
+      </element>
+    </root>
+  </artifact>
+</component>

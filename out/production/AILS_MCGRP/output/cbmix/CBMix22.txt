@@ -1,0 +1,8 @@
+Solution{cost=1963, solution=
+Route{dist=212, load=1956, tasks=[N1-Node{1}, A1-Arc{2,6}, A11-Arc{11,16}, N16-Node{16}, E6-Edge{21,16}, A16-Arc{16,10}, N10-Node{10}, A8-Arc{10,1}, N1-Node{1}]}
+Route{dist=330, load=1877, tasks=[N1-Node{1}, E2-Edge{3,9}, E4-Edge{9,15}, A15-Arc{15,5}, N5-Node{5}, E5-Edge{15,14}, N7-Node{7}, N1-Node{1}]}
+Route{dist=349, load=1900, tasks=[N1-Node{1}, A3-Arc{4,3}, A2-Arc{3,4}, N4-Node{4}, A4-Arc{4,5}, A21-Arc{19,18}, N18-Node{18}, A19-Arc{18,14}, N1-Node{1}]}
+Route{dist=407, load=1934, tasks=[N1-Node{1}, A5-Arc{4,9}, A7-Arc{9,14}, A14-Arc{14,18}, A20-Arc{19,15}, N19-Node{19}, A25-Arc{25,24}, E10-Edge{23,22}, A23-Arc{22,16}, A17-Arc{16,11}, N1-Node{1}]}
+Route{dist=267, load=1858, tasks=[N1-Node{1}, E1-Edge{2,7}, A6-Arc{7,6}, E3-Edge{6,12}, A13-Arc{12,22}, E9-Edge{22,21}, E8-Edge{21,20}, A22-Arc{20,10}, N1-Node{1}]}
+Route{dist=398, load=1791, tasks=[N1-Node{1}, A12-Arc{12,13}, E7-Edge{17,18}, A24-Arc{23,17}, A18-Arc{17,13}, A10-Arc{11,10}, A9-Arc{10,16}, N1-Node{1}]}
+}

@@ -1,0 +1,10 @@
+Solution{cost=3235, solution=
+Route{dist=557, load=1744, tasks=[N21-Node{21}, A17-Arc{16,8}, A8-Arc{8,7}, A6-Arc{7,6}, A4-Arc{6,1}, A1-Arc{2,3}, A2-Arc{4,5}, A3-Arc{5,11}, A7-Arc{7,13}, N21-Node{21}]}
+Route{dist=314, load=1593, tasks=[N21-Node{21}, A28-Arc{21,17}, A20-Arc{17,18}, A26-Arc{19,30}, A41-Arc{29,23}, A31-Arc{23,22}, A38-Arc{27,26}, N21-Node{21}]}
+Route{dist=222, load=1387, tasks=[N21-Node{21}, A47-Arc{34,35}, A48-Arc{35,27}, A36-Arc{26,25}, A33-Arc{25,20}, A27-Arc{20,21}, N21-Node{21}]}
+Route{dist=700, load=1707, tasks=[N21-Node{21}, A51-Arc{36,37}, A52-Arc{38,30}, A37-Arc{26,34}, A46-Arc{34,33}, A35-Arc{25,33}, A45-Arc{33,32}, A44-Arc{32,24}, N21-Node{21}]}
+Route{dist=375, load=1476, tasks=[N21-Node{21}, A29-Arc{21,22}, A49-Arc{35,36}, A50-Arc{36,31}, A42-Arc{31,27}, A39-Arc{27,31}, A43-Arc{31,28}, A40-Arc{28,29}, A34-Arc{25,21}, N21-Node{21}]}
+Route{dist=252, load=1604, tasks=[N21-Node{21}, A21-Arc{17,22}, A30-Arc{22,17}, A19-Arc{17,16}, A18-Arc{16,15}, A16-Arc{14,24}, N24-Node{24}, A32-Arc{24,25}, N21-Node{21}]}
+Route{dist=478, load=1689, tasks=[N21-Node{21}, A23-Arc{18,19}, A25-Arc{19,10}, A10-Arc{10,4}, A13-Arc{11,10}, A12-Arc{10,18}, A24-Arc{18,23}, N21-Node{21}]}
+Route{dist=337, load=1358, tasks=[N21-Node{21}, A22-Arc{18,10}, A11-Arc{10,9}, A9-Arc{9,8}, A5-Arc{6,12}, A14-Arc{12,13}, A15-Arc{13,15}, N21-Node{21}]}
+}

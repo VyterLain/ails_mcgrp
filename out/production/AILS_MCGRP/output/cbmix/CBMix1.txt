@@ -1,0 +1,9 @@
+Solution{cost=2669, solution=
+Route{dist=468, load=1799, tasks=[N1-Node{1}, A2-Arc{2,6}, A13-Arc{8,13}, A21-Arc{13,14}, N17-Node{17}, A30-Arc{17,14}, A24-Arc{14,13}, A20-Arc{13,12}, A19-Arc{12,11}, N1-Node{1}]}
+Route{dist=298, load=1783, tasks=[N1-Node{1}, A3-Arc{3,4}, N4-Node{4}, A6-Arc{4,5}, A8-Arc{5,10}, A15-Arc{10,5}, N5-Node{5}, A7-Arc{5,4}, A5-Arc{4,3}, N1-Node{1}]}
+Route{dist=364, load=1719, tasks=[N1-Node{1}, A11-Arc{7,12}, N19-Node{19}, A33-Arc{19,15}, A25-Arc{15,12}, A18-Arc{12,7}, A9-Arc{6,2}, N1-Node{1}]}
+Route{dist=342, load=1676, tasks=[N1-Node{1}, A17-Arc{11,12}, N15-Node{15}, A26-Arc{15,16}, N16-Node{16}, A28-Arc{16,15}, N11-Node{11}, N1-Node{1}]}
+Route{dist=496, load=1793, tasks=[N1-Node{1}, A22-Arc{13,16}, A29-Arc{16,17}, N21-Node{21}, A37-Arc{21,20}, A36-Arc{20,19}, A27-Arc{15,19}, A34-Arc{19,18}, A31-Arc{18,11}, N1-Node{1}]}
+Route{dist=465, load=1798, tasks=[N1-Node{1}, A32-Arc{18,19}, A35-Arc{19,20}, A23-Arc{14,10}, N10-Node{10}, A16-Arc{10,9}, A14-Arc{9,8}, N1-Node{1}]}
+Route{dist=236, load=1588, tasks=[N1-Node{1}, N2-Node{2}, A4-Arc{3,8}, N8-Node{8}, A12-Arc{8,7}, A10-Arc{7,2}, A1-Arc{2,1}, N1-Node{1}]}
+}
