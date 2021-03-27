@@ -2,11 +2,11 @@
 
 ##### Routing问题学习——论文的复现
 
-- **论文名：**An Adaptive Iterated Local Search for the Mixed Capacitated General Routing Problem
+- 论文名：An Adaptive Iterated Local Search for the Mixed Capacitated General Routing Problem
 
-- **作者名：**Mauro Dell’Amico, José Carlos Díaz Díaz, Geir Hasle, Manuel Iori
+- 作者名：Mauro Dell’Amico, José Carlos Díaz Díaz, Geir Hasle, Manuel Iori
 
-- **期刊名：**Transportation Science
+- 期刊名：Transportation Science
 
 ##### 关于MCGRP/NEARP：
 
