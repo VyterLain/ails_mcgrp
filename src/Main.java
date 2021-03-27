@@ -8,10 +8,7 @@ import java.io.File;
 
 public class Main {
     public static void main(String[] args) {
-        boolean server = true;
-        String pre;
-        if (server) pre = "/ora1/mcgrp/data/";
-        else pre = "src/data/";
+        String pre = "src/data/";
         try {
             String[] dir_paths = new String[]{"bhw", "cbmix"};
             for (String dir_path : dir_paths) {
@@ -25,7 +22,7 @@ public class Main {
                     MyParameter.init();
                     Algorithm algo = new Algorithm();
                     Solution sol = algo.run();
-                    WriteData.write(sol, dir_path, server);
+                    WriteData.write(sol, dir_path);
                     System.out.println(sol);
                 }
             }
