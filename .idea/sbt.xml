@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ScalaSbtSettings">
+    <option name="customLauncherEnabled" value="true" />
+    <option name="customLauncherPath" value="D:\sbt\bin\sbt-launch.jar" />
+    <option name="customVMPath" />
+    <option name="vmParameters" value="#-Xms1024m #-Xmx1024m #-Xss4M #-XX:ReservedCodeCacheSize=128m #-Dsbt.log.format=true -Dsbt.boot.directory=D:/sbt/data/.sbt/boot -Dsbt.global.base=D:/sbt/data/.sbt -Dsbt.ivy.home=D:/sbt/data/.ivy2 #-Dsbt.repository.config=D:/sbt/conf/repo.properties #-Dsbt.repository.secure=false" />
+  </component>
+</project>

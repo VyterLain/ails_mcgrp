@@ -32,7 +32,10 @@ public class Or_opt extends Operator {
 
     @Override
     public void local_search(Solution s) {
-        while (get_best_move(s)) do_move(s);
+        while (get_best_move(s)) {
+            do_move(s);
+            s.emptyRouteCheck();
+        }
     }
 
     @Override
