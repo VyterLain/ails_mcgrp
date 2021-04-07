@@ -15,6 +15,10 @@ public class MyParameter {
     public static double tho_LS_full = 0.15;
     public static int ITER_BEFORE_KICK;
 
+    public static void setRandomSeed(int seed){
+        random = new Random(seed);
+    }
+
     public static void init(){
         k_max = Math.min(50, Data.total_requests - 2);
         ITER_BEFORE_KICK = 20000 * Math.max(1,
