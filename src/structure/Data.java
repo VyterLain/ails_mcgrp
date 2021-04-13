@@ -4,6 +4,8 @@ import java.util.Map;
 
 public class Data {
 
+    // TODO: 增加原文中的初始化算法，在Data类中，添加depot到task的路径列表，可能实现：哈希表
+
     public static String name;
     public static int max_vehicles;
     public static int max_capacity;

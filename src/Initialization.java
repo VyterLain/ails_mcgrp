@@ -5,6 +5,19 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Initialization {
+
+    // TODO: 增加原文中的初始化算法，包括bin packing和augment merge
+
+    public Solution augmentMerge(){
+        // TODO
+        return null;
+    }
+
+    public Solution binPacking() {
+        // TODO
+        return null;
+    }
+
     public Solution greedyWay() {
         Solution sol_init = new Solution();
         List<Task> ts = new ArrayList<>(Arrays.asList(Data.tasks));
