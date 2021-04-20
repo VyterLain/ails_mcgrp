@@ -8,9 +8,10 @@ import java.io.File;
 
 public class Main {
     public static void main(String[] args) {
-        if (args.length > 0) {
-            MyParameter.setRandomSeed(Integer.parseInt(args[0]));
-        }
+        if (args.length % 2 != 0) {
+            System.out.println("wrong args!");
+            System.exit(1);
+        } else for (int i = 0; i < args.length; i = i + 2) config(args[i], args[i + 1]);
         String pre = "src/data/";
         try {
             String[] dir_paths = new String[]{"bhw", "cbmix"};
@@ -31,6 +32,15 @@ public class Main {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void config(String type, String arg) {
+        if (type.equals("-s")) MyParameter.setRandomSeed(Integer.parseInt(arg));
+        else if (type.equals("-t")) MyParameter.setRunningTime(Double.parseDouble(arg));
+        else {
+            System.out.println("no such para");
+            System.exit(1);
         }
     }
 }

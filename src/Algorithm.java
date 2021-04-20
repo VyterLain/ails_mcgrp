@@ -90,11 +90,8 @@ public class Algorithm {
             if (MyParameter.tho_LS_full > random.nextDouble())
                 opt_LS.LS_Full(x_current);
             else {
-                if ((Data.total_requests < 200)) {
-                    opt_LS.LS_1(x_current);
-                } else {
-                    opt_LS.LS_2(x_current);
-                }
+                if ((Data.total_requests < 200)) opt_LS.LS_1(x_current);
+                else opt_LS.LS_2(x_current);
             }
             KickCountdown -= 1;
             if (x_current.getDist() < x_BestThisStage.dist) {
@@ -178,13 +175,10 @@ public class Algorithm {
     }
 
     private void Update_Incumbents(Solution x_current) {
-        if (x_current.dist < x_incumbent.dist) {
-            x_incumbent = new Solution(x_current);
-        }
+        if (x_current.dist < x_incumbent.dist) x_incumbent = new Solution(x_current);
     }
 
     private void Initialize_Roulette_Probabilities() {
-        for (int[] row : opt_des_con.pi)
-            Arrays.fill(row, 1);
+        for (int[] row : opt_des_con.pi) Arrays.fill(row, 1);
     }
 }

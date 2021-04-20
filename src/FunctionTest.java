@@ -15,8 +15,8 @@ public class FunctionTest {
 
     public static void main(String[] args) {
         try {
-            ReadData.get("src/data/cbmix/CBMix22.dat");
-//            ReadData.get("src/data/bhw/BHW5.dat");
+//            ReadData.get("src/data/cbmix/CBMix22.dat");
+            ReadData.get("src/data/bhw/BHW6.dat");
             Data.show();
             Data.preprocess();
             MyParameter.init();
