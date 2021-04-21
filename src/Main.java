@@ -28,7 +28,9 @@ public class Main {
                     Solution sol = algo.run();
                     WriteData.write(sol, dir_path);
                     System.out.println(sol);
+                    break;
                 }
+                break;
             }
         } catch (Exception e) {
             e.printStackTrace();
