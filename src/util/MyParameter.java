@@ -13,11 +13,14 @@ public class MyParameter {
     public static double beta = 0.75;
     public static double gamma = 0.1;
     public static double tho_LS_full = 0.15;
+    public static int LS_type = 0;
     public static int ITER_BEFORE_KICK;
 
     public static void setRandomSeed(int seed){
         random = new Random(seed);
     }
+
+    public static void setLSType(int type){ LS_type = type; }
 
     public static void setRunningTime(double time) { running_time = time; }
 

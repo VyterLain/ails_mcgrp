@@ -13,8 +13,8 @@ public class Main {
             System.exit(1);
         } else for (int i = 0; i < args.length; i = i + 2) config(args[i], args[i + 1]);
         String pre = "src/data/";
+        String[] dir_paths = new String[]{"bhw", "cbmix"};
         try {
-            String[] dir_paths = new String[]{"bhw", "cbmix"};
             for (String dir_path : dir_paths) {
                 File dir = new File(pre + dir_path);
                 String[] files_name = dir.list();
@@ -36,11 +36,26 @@ public class Main {
     }
 
     private static void config(String type, String arg) {
-        if (type.equals("-s")) MyParameter.setRandomSeed(Integer.parseInt(arg));
-        else if (type.equals("-t")) MyParameter.setRunningTime(Double.parseDouble(arg));
-        else {
-            System.out.println("no such para");
-            System.exit(1);
+        switch (type) {
+            case "-s":
+                MyParameter.setRandomSeed(Integer.parseInt(arg));
+                break;
+            case "-t":
+                MyParameter.setRunningTime(Double.parseDouble(arg));
+                break;
+            case "-ls":
+                switch (arg) {
+                    case "order" -> MyParameter.setLSType(0);
+                    case "best" -> MyParameter.setLSType(1);
+                    default -> {
+                        System.out.println("no such para for ls");
+                        System.exit(1);
+                    }
+                }
+                break;
+            default:
+                System.out.println("no such para");
+                System.exit(1);
         }
     }
 }
