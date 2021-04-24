@@ -15,11 +15,6 @@ public class Swap extends Operator {
     private int index_2;
 
     @Override
-    public void local_search(Solution s) {
-        while (get_best_move(s)) do_move(s);
-    }
-
-    @Override
     public boolean get_best_move(Solution s) {
         route_1 = -1;
         route_2 = -1;

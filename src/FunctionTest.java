@@ -26,8 +26,8 @@ public class FunctionTest {
 
 //        test_route_function();
 //        test_destroy_repair();
-//        test_ls_operators();
-        test_main_algorithm_structure();
+        test_ls_operators();
+//        test_main_algorithm_structure();
     }
 
     private static void test_ls_operators() {

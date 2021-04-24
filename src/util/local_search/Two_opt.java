@@ -47,23 +47,18 @@ public class Two_opt extends Operator {
     // and it will become: A B C + D E F G H
     private int route_1;
     private int route_2;
-    private int cut_1;
-    private int cut_2;
+    //    private int cut_1;
+//    private int cut_2;
     private subType best_type;
     private Route best_new1;
     private Route best_new2;
 
     @Override
-    public void local_search(Solution s) {
-        while (get_best_move(s)) do_move(s);
-    }
-
-    @Override
     public boolean get_best_move(Solution s) {
         route_1 = -1;
         route_2 = -1;
-        cut_1 = -1;
-        cut_2 = -1;
+//        cut_1 = -1;
+//        cut_2 = -1;
         best_move_saving = Integer.MAX_VALUE;
         for (int _r1 = 0; _r1 < s.routes.size(); _r1++) {
             Route r1 = s.routes.get(_r1);
@@ -87,8 +82,6 @@ public class Two_opt extends Operator {
                         if (_r1 == _r2) intra_move(_r1, r1, _t1, _t2);
                             // at different routes
                         else inter_move(_r1, _r2, r1, r2, _t1, _t2);
-                        // here, if we find better move,
-                        // attributes should been updated
                     }
                 }
             }
@@ -109,21 +102,31 @@ public class Two_opt extends Operator {
     // update route index, cut index, best_move_saving, best_type
     private void intra_move(int route_index, Route route,
                             int cut_first, int cut_second) {
-        List<Task> segment = new ArrayList<>();
-        Route temp = new Route(route);
-        for (int i = cut_first; i < cut_second; i++) segment.add(temp.remove(cut_first));
-        for (Task t : segment) {
-            if (t.type == TaskType.EDGE) t = Data.get_reverse_edge(t);
-            temp.add(t, cut_first);
+//        List<Task> segment = new ArrayList<>();
+//        Route temp = new Route(route);
+//        for (int i = cut_first; i < cut_second; i++) segment.add(temp.remove(cut_first));
+//        for (Task t : segment) {
+//            if (t.type == TaskType.EDGE) t = Data.get_reverse_edge(t);
+//            temp.add(t, cut_first);
+//        }
+        Route temp = new Route(); // only travel once
+        for (int i = 1; i < cut_first; i++) temp.add(route.tasks.get(i));
+        for (int i = cut_second - 1; i >= cut_first; i--) {
+            Task t = route.tasks.get(i);
+            if (t.type == TaskType.EDGE) temp.add(Data.get_reverse_edge(t));
+            else temp.add(t);
         }
+        for (int i = cut_second; i < route.tasks.size(); i++) temp.add(route.tasks.get(i));
         int change = temp.dist - route.dist;
         if (change < 0 && change < best_move_saving) {
             route_1 = route_2 = route_index;
-            cut_1 = cut_first;
-            cut_2 = cut_second;
+//            cut_1 = cut_first;
+//            cut_2 = cut_second;
             best_move_saving = change;
             best_type = subType._1;
-            best_new1 = best_new2 = new Route(temp);
+//            best_new1 = best_new2 = new Route(temp);
+            best_new1 = best_new2 = temp; // every time we use this method, temp will be new
+//            System.out.println(best_new1);
         }
     }
 
@@ -190,12 +193,14 @@ public class Two_opt extends Operator {
             if (change < 0 && change < best_move_saving) {
                 route_1 = route_index_first;
                 route_2 = route_index_second;
-                cut_1 = cut_first;
-                cut_2 = cut_second;
+//                cut_1 = cut_first;
+//                cut_2 = cut_second;
                 best_move_saving = change;
                 best_type = sub_type;
-                best_new1 = new Route(new1);
-                best_new2 = new Route(new2);
+//                best_new1 = new Route(new1);
+//                best_new2 = new Route(new2);
+                best_new1 = new1;
+                best_new2 = new2; // every time we use this method, new1/2 will be new
             }
         }
     }

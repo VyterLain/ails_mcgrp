@@ -17,9 +17,7 @@ public class Solution {
 
     public Solution(Solution sol) {
         this.dist = sol.dist;
-        for (Route r : sol.routes) {
-            this.routes.add(new Route(r));
-        }
+        for (Route r : sol.routes) this.routes.add(new Route(r));
     }
 
     public void add(Route r) {
@@ -62,9 +60,7 @@ public class Solution {
 
     public int getDist() {
         this.dist = 0;
-        for (Route r : routes) {
-            this.dist += r.dist;
-        }
+        for (Route r : routes) this.dist += r.dist;
         return this.dist;
     }
 

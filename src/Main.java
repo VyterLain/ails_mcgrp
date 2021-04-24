@@ -20,7 +20,8 @@ public class Main {
                 String[] files_name = dir.list();
                 assert files_name != null;
                 for (String file_name : files_name) {
-                    ReadData.get(pre + dir_path + '/' + file_name);
+//                    ReadData.get(pre + dir_path + '/' + file_name);
+                    ReadData.get(pre + dir_path + "/BHW6.dat");
                     Data.show();
                     Data.preprocess();
                     MyParameter.init();

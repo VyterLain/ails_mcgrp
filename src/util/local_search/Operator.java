@@ -4,12 +4,6 @@ import structure.Solution;
 
 public abstract class Operator {
 
-    /**
-     *      if (get_best_move(s, type)){
-     *          do_move(s, type);
-     *      }
-     */
-
     // saving = new cost - old cost
     // when saving < 0, it is a acceptable move
     // if get_best_move() returns false,
@@ -20,7 +14,9 @@ public abstract class Operator {
      * find and do the best move to the current solution
      * until there is no more moves with positive saving
      */
-    public abstract void local_search(Solution s);
+    public void local_search(Solution s) {
+        while (get_best_move(s)) do_move(s);
+    }
 
     /**
      * find the best move and record the move

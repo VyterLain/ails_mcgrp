@@ -44,8 +44,7 @@ public class Route {
         int last_node = tasks.get(tasks.size() - 1).to;
         tasks.add(t);
         load += t.demand;
-        dist += t.dist;
-        dist += Data.dist[last_node][t.from];
+        dist += (Data.dist[last_node][t.from] + t.dist);
         switch (t.type) {
             case NODE -> nodes++;
             case EDGE -> edges++;
@@ -68,13 +67,9 @@ public class Route {
         int pre_node = tasks.get(index - 1).to;
         int nex_node = tasks.get(index).from;
 
-        dist += Data.dist[pre_node][t.from];
-        dist += Data.dist[t.to][nex_node];
-        dist -= Data.dist[pre_node][nex_node];
-        dist += t.dist;
+        dist += (t.dist + Data.dist[pre_node][t.from] + Data.dist[t.to][nex_node] - Data.dist[pre_node][nex_node]);
         load += t.demand;
         tasks.add(index, t);
-
         switch (t.type) {
             case NODE -> nodes++;
             case EDGE -> edges++;
@@ -105,10 +100,7 @@ public class Route {
         int pre_node = tasks.get(index - 1).to;
         int nex_node = tasks.get(index + 1).from;
         Task t = tasks.remove(index);
-        dist -= Data.dist[pre_node][t.from];
-        dist -= Data.dist[t.to][nex_node];
-        dist += Data.dist[pre_node][nex_node];
-        dist -= t.dist;
+        dist += (Data.dist[pre_node][nex_node] - t.dist - Data.dist[pre_node][t.from] - Data.dist[t.to][nex_node]);
         load -= t.demand;
         switch (t.type) {
             case NODE -> nodes--;

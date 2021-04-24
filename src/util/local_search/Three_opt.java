@@ -22,12 +22,12 @@ public class Three_opt extends Operator {
     private int max_B_length;
     private int selected_route_1;
     private int selected_route_2;
-    private int selected_cut_1;
-    private int selected_cut_2;
+//    private int selected_cut_1;
+//    private int selected_cut_2;
     private int selected_B;
     private Route best_new_1;
     private Route best_new_2;
-    private subType selected_type;
+//    private subType selected_type;
 
     public Three_opt() {
         this.max_B_length = 3;
@@ -38,16 +38,11 @@ public class Three_opt extends Operator {
     }
 
     @Override
-    public void local_search(Solution s) {
-        while (get_best_move(s)) do_move(s);
-    }
-
-    @Override
     public boolean get_best_move(Solution s) {
         selected_route_1 = -1;
         selected_route_2 = -1;
-        selected_cut_1 = -1;
-        selected_cut_2 = -1;
+//        selected_cut_1 = -1;
+//        selected_cut_2 = -1;
         selected_B = -1;
         best_move_saving = Integer.MAX_VALUE;
         for (int _r1 = 0; _r1 < s.routes.size(); _r1++) {
@@ -134,10 +129,10 @@ public class Three_opt extends Operator {
             int change = newR.dist - r.dist;
             if (change < 0 && change < best_move_saving) {
                 selected_route_1 = selected_route_2 = selected_route_index;
-                selected_cut_1 = selected_cut_2 = selected_cut_index;
+//                selected_cut_1 = selected_cut_2 = selected_cut_index;
                 selected_B = selected_B_length;
                 best_move_saving = change;
-                selected_type = sub_type;
+//                selected_type = sub_type;
                 best_new_1 = best_new_2 = new Route(newR);
             }
         }
@@ -203,11 +198,11 @@ public class Three_opt extends Operator {
             if (change < 0 && change < best_move_saving) {
                 selected_route_1 = selected_route_index_1;
                 selected_route_2 = selected_route_index_2;
-                selected_cut_1 = selected_cut_index_1;
-                selected_cut_2 = selected_cut_index_2;
+//                selected_cut_1 = selected_cut_index_1;
+//                selected_cut_2 = selected_cut_index_2;
                 selected_B = selected_B_length_1;
                 best_move_saving = change;
-                selected_type = sub_type;
+//                selected_type = sub_type;
                 best_new_1 = new Route(newR1);
                 best_new_2 = new Route(newR2);
             }
