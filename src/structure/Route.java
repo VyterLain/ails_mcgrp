@@ -16,6 +16,7 @@ public class Route {
     // 5."refresh" function can help to
     //   verify and modify the edge
     //   by the next_nodes list
+    private final Data data;
 
     public int dist = 0;
     public int load = 0;
@@ -26,12 +27,14 @@ public class Route {
 
     public List<Task> tasks = new ArrayList<>();
 
-    public Route() {
+    public Route(Data data) {
+        this.data = data;
         nodes++;
-        this.tasks.add(Data.depot);
+        this.tasks.add(data.depot);
     }
 
     public Route(Route route) {
+        this.data = route.data;
         this.dist = route.dist;
         this.load = route.load;
         this.nodes = route.nodes;
@@ -44,7 +47,7 @@ public class Route {
         int last_node = tasks.get(tasks.size() - 1).to;
         tasks.add(t);
         load += t.demand;
-        dist += (Data.dist[last_node][t.from] + t.dist);
+        dist += (data.dist[last_node][t.from] + t.dist);
         switch (t.type) {
             case NODE -> nodes++;
             case EDGE -> edges++;
@@ -67,7 +70,7 @@ public class Route {
         int pre_node = tasks.get(index - 1).to;
         int nex_node = tasks.get(index).from;
 
-        dist += (t.dist + Data.dist[pre_node][t.from] + Data.dist[t.to][nex_node] - Data.dist[pre_node][nex_node]);
+        dist += (t.dist + data.dist[pre_node][t.from] + data.dist[t.to][nex_node] - data.dist[pre_node][nex_node]);
         load += t.demand;
         tasks.add(index, t);
         switch (t.type) {
@@ -100,7 +103,7 @@ public class Route {
         int pre_node = tasks.get(index - 1).to;
         int nex_node = tasks.get(index + 1).from;
         Task t = tasks.remove(index);
-        dist += (Data.dist[pre_node][nex_node] - t.dist - Data.dist[pre_node][t.from] - Data.dist[t.to][nex_node]);
+        dist += (data.dist[pre_node][nex_node] - t.dist - data.dist[pre_node][t.from] - data.dist[t.to][nex_node]);
         load -= t.demand;
         switch (t.type) {
             case NODE -> nodes--;
@@ -115,7 +118,7 @@ public class Route {
             Task t = tasks.get(i);
             if (t.type != TaskType.EDGE) continue;
             remove(i);
-            add(Data.get_reverse_edge(t), i);
+            add(data.get_reverse_edge(t), i);
         }
     }
 

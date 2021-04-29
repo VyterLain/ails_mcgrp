@@ -11,10 +11,10 @@ public class Node_Destructor implements Destructor {
     //  otherwise the random-destructor is used.
 
     @Override
-    public List<Task> destruct(int k, Solution sol) {
+    public List<Task> destruct(Data data, int k, Solution sol) {
 
-        if (k > Data.nodes_r)
-            return new Random_Destructor().destruct(k, sol);
+        if (k > data.nodes_r)
+            return new Random_Destructor().destruct(data, k, sol);
 
         List<Task> removed = new ArrayList<>();
 

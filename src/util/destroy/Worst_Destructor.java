@@ -14,8 +14,8 @@ public class Worst_Destructor implements Destructor {
     //  The operator removes the k tasks having the highest values of f(t,x)
 
     @Override
-    public List<Task> destruct(int k, Solution sol) {
-        HashSet<Task> set = get_k_tasks(k, sol);
+    public List<Task> destruct(Data data, int k, Solution sol) {
+        HashSet<Task> set = get_k_tasks(data, k, sol);
         List<Task> removed = new ArrayList<>();
         for (Route r : sol.routes) {
             int i = 1;
@@ -34,7 +34,7 @@ public class Worst_Destructor implements Destructor {
         return removed;
     }
 
-    private HashSet<Task> get_k_tasks(int k, Solution s) {
+    private HashSet<Task> get_k_tasks(Data data, int k, Solution s) {
         // use a easy way,
         // calculate cost of each task and add into list -> o(n)
         // sort list -> o(n*log(n))
@@ -46,7 +46,7 @@ public class Worst_Destructor implements Destructor {
                 Task t = r.tasks.get(i);
                 int pre_node = r.tasks.get(i - 1).to;
                 int nex_node = r.tasks.get(i + 1).from;
-                int cost = t.dist - Data.dist[pre_node][nex_node] + (Data.dist[pre_node][t.from] + Data.dist[t.to][nex_node]);
+                int cost = t.dist - data.dist[pre_node][nex_node] + (data.dist[pre_node][t.from] + data.dist[t.to][nex_node]);
                 all_task_cost_pairs.add(new Tuple<>(t, cost));
             }
         }

@@ -16,21 +16,29 @@ public class MyParameter {
     public static int LS_type = 0;
     public static int ITER_BEFORE_KICK;
 
-    public static void setRandomSeed(int seed){
+    public static void setRandomSeed(int seed) {
         random = new Random(seed);
     }
 
-    public static void setLSType(int type){ LS_type = type; }
+    public static void setRandomSeed() {
+        random = new Random();
+    }
 
-    public static void setRunningTime(double time) { running_time = time; }
+    public static void setLSType(int type) {
+        LS_type = type;
+    }
 
-    public static void init(){
-        k_max = Math.min(50, Data.total_requests - 2);
+    public static void setRunningTime(double time) {
+        running_time = time;
+    }
+
+    public static void init(Data data) {
+        k_max = Math.min(50, data.total_requests - 2);
         ITER_BEFORE_KICK = 20000 * Math.max(1,
-                20000 / (Data.total_requests * Data.total_requests
-                        + Data.arcs
-                        + 2 * Data.edges
-                        + Data.nodes * Data.nodes / 5));
+                20000 / (data.total_requests * data.total_requests
+                        + data.arcs
+                        + 2 * data.edges
+                        + data.nodes * data.nodes / 5));
     }
 
 }

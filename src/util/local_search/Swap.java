@@ -16,6 +16,7 @@ public class Swap extends Operator {
 
     @Override
     public boolean get_best_move(Solution s) {
+        Data data = s.data;
         route_1 = -1;
         route_2 = -1;
         index_1 = -1;
@@ -24,17 +25,16 @@ public class Swap extends Operator {
         for (int i_1 = 0; i_1 < s.routes.size(); i_1++) {
             Route r1 = s.routes.get(i_1);
             for (int j_1 = 1; j_1 < r1.tasks.size() - 1; j_1++) {
-                // for every task
-                Task t1 = r1.tasks.get(j_1);
                 for (int i_2 = i_1; i_2 < s.routes.size(); i_2++) {
                     Route r2 = s.routes.get(i_2);
                     for (int j_2 = 1; j_2 < r2.tasks.size() - 1; j_2++) {
                         if (i_1 == i_2 && j_2 <= j_1) continue;
                         // for every task,
                         // except the one has been visited
+                        Task t1 = r1.tasks.get(j_1);
                         Task t2 = r2.tasks.get(j_2);
-                        if (r1.load - t1.demand + t2.demand > Data.max_capacity
-                                || r2.load - t2.demand + t1.demand > Data.max_capacity) continue;
+                        if (r1.load - t1.demand + t2.demand > data.max_capacity
+                                || r2.load - t2.demand + t1.demand > data.max_capacity) continue;
                         int change = 0;
                         // get the pre and next of t1
                         int pre_node_1 = r1.tasks.get(j_1 - 1).to;
@@ -42,12 +42,12 @@ public class Swap extends Operator {
                         // get the pre and next of t2
                         int pre_node_2 = r2.tasks.get(j_2 - 1).to;
                         int nex_node_2 = r2.tasks.get(j_2 + 1).from;
-                        if (i_1 == i_2 && j_2 == j_1 + 1) change = getChangeForAdjacentTask(t1, t2, change, pre_node_1, nex_node_2);
+                        if (i_1 == i_2 && j_2 == j_1 + 1) change = getChangeForAdjacentTask(data, t1, t2, change, pre_node_1, nex_node_2);
                         else {
                             // change - remove dist
                             // change + add dist
-                            change = getChangeForNotAdjacentTask(t1, change, pre_node_1, nex_node_1, pre_node_2, nex_node_2);
-                            change = getChangeForNotAdjacentTask(t2, change, pre_node_2, nex_node_2, pre_node_1, nex_node_1);
+                            change = getChangeForNotAdjacentTask(data, t1, change, pre_node_1, nex_node_1, pre_node_2, nex_node_2);
+                            change = getChangeForNotAdjacentTask(data, t2, change, pre_node_2, nex_node_2, pre_node_1, nex_node_1);
                         }
                         // if we find a better move, replace current move
                         if (change < 0 && change < best_move_saving) {
@@ -65,17 +65,17 @@ public class Swap extends Operator {
         return route_1 >= 0;
     }
 
-    private int getChangeForAdjacentTask(Task t1, Task t2, int change, int pre, int next) {
-        change -= (Data.dist[pre][t1.from] + Data.dist[t1.to][t2.from] + Data.dist[t2.to][next]);
-        change += (Data.dist[pre][t2.from] + Data.dist[t2.to][t1.from] + Data.dist[t1.to][next]);
+    private int getChangeForAdjacentTask(Data data, Task t1, Task t2, int change, int pre, int next) {
+        change -= (data.dist[pre][t1.from] + data.dist[t1.to][t2.from] + data.dist[t2.to][next]);
+        change += (data.dist[pre][t2.from] + data.dist[t2.to][t1.from] + data.dist[t1.to][next]);
         return change;
     }
 
-    private int getChangeForNotAdjacentTask(Task t, int change,
+    private int getChangeForNotAdjacentTask(Data data, Task t, int change,
                                             int pre_node_remove, int nex_node_remove,
                                             int pre_node_insert, int nex_node_insert) {
-        change -= (Data.dist[pre_node_remove][t.from] + Data.dist[t.to][nex_node_remove]);
-        change += (Data.dist[pre_node_insert][t.from] + Data.dist[t.to][nex_node_insert]);
+        change -= (data.dist[pre_node_remove][t.from] + data.dist[t.to][nex_node_remove]);
+        change += (data.dist[pre_node_insert][t.from] + data.dist[t.to][nex_node_insert]);
         return change;
     }
 

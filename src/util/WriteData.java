@@ -15,7 +15,7 @@ public class WriteData {
             System.out.println("wrong! infeasible solution occured");
             System.exit(1);
         }
-        path = "src/output/" + path + '/' + Data.name + '_' + MyParameter.running_time + ".txt";
+        path = "src/output/" + path + '/' + s.data.name + '_' + MyParameter.running_time + ".txt";
         File wf = new File(path);
         BufferedWriter bw = new BufferedWriter(new FileWriter(wf));
         bw.write(s.toString());

@@ -39,6 +39,7 @@ public class Three_opt extends Operator {
 
     @Override
     public boolean get_best_move(Solution s) {
+        Data data = s.data;
         selected_route_1 = -1;
         selected_route_2 = -1;
 //        selected_cut_1 = -1;
@@ -53,14 +54,14 @@ public class Three_opt extends Operator {
                     if (_t1 + b_length_1 > r1.tasks.size() - 2) continue;
                     // for the first route
                     assert _t1 + b_length_1 < r1.tasks.size() - 1;
-                    intra_move(r1, _r1, _t1, b_length_1);
+                    intra_move(data, r1, _r1, _t1, b_length_1);
                     for (int _r2 = 0; _r2 < s.routes.size(); _r2++) {
                         if (_r1 == _r2) continue;
                         Route r2 = s.routes.get(_r2);
                         // for every length of B
                         for (int _t2 = 1; _t2 < r2.tasks.size(); _t2++) {
                             // for the second route
-                            inter_move(r1, _r1, _t1, b_length_1, r2, _r2, _t2);
+                            inter_move(data, r1, _r1, _t1, b_length_1, r2, _r2, _t2);
                         }
                     }
                 }
@@ -105,7 +106,7 @@ public class Three_opt extends Operator {
 
     }
 
-    private void intra_move(Route r, int selected_route_index,
+    private void intra_move(Data data, Route r, int selected_route_index,
                             int selected_cut_index, int selected_B_length) {
         List<Task> A = new ArrayList<>();
         List<Task> B = new ArrayList<>();
@@ -116,15 +117,15 @@ public class Three_opt extends Operator {
         assert (A.size() + B.size() + C.size()) == r.tasks.size() - 2;
         for (subType sub_type : subType.values()) {
             if (sub_type == subType.AC_B_) continue;
-            Route newR = new Route();
+            Route newR = new Route(data);
             switch (sub_type) {
                 // ACB_, AC_B, A_CB, A_CB_, A_C_B, A_C_B_
-                case ACB_ -> complete_route(newR, A, false, C, false, B, true);
-                case AC_B -> complete_route(newR, A, false, C, true, B, false);
-                case A_CB -> complete_route(newR, A, true, C, false, B, false);
-                case A_CB_ -> complete_route(newR, A, true, C, false, B, true);
-                case A_C_B -> complete_route(newR, A, true, C, true, B, false);
-                case A_C_B_ -> complete_route(newR, A, true, C, true, B, true);
+                case ACB_ -> complete_route(data, newR, A, false, C, false, B, true);
+                case AC_B -> complete_route(data, newR, A, false, C, true, B, false);
+                case A_CB -> complete_route(data, newR, A, true, C, false, B, false);
+                case A_CB_ -> complete_route(data, newR, A, true, C, false, B, true);
+                case A_C_B -> complete_route(data, newR, A, true, C, true, B, false);
+                case A_C_B_ -> complete_route(data, newR, A, true, C, true, B, true);
             }
             int change = newR.dist - r.dist;
             if (change < 0 && change < best_move_saving) {
@@ -138,7 +139,7 @@ public class Three_opt extends Operator {
         }
     }
 
-    private void inter_move(Route r1, int selected_route_index_1,
+    private void inter_move(Data data, Route r1, int selected_route_index_1,
                             int selected_cut_index_1, int selected_B_length_1,
                             Route r2, int selected_route_index_2,
                             int selected_cut_index_2) {
@@ -160,38 +161,38 @@ public class Three_opt extends Operator {
         int D_d = get_segment(r2, 1, selected_cut_index_2, D);
         int E_d = get_segment(r2, selected_cut_index_2, r2.tasks.size() - 1, E);
         assert D.size() + E.size() == r2.tasks.size() - 2;
-        if (D_d + E_d + B_d > Data.max_capacity) return;
+        if (D_d + E_d + B_d > data.max_capacity) return;
         for (subType sub_type : subType.values()) {
-            Route newR1 = new Route();
-            Route newR2 = new Route();
+            Route newR1 = new Route(data);
+            Route newR2 = new Route(data);
             switch (sub_type) {
                 case ACB_ -> {
-                    complete_route(newR1, A, false, C, false, null, false);
-                    complete_route(newR2, D, false, B, true, E, false);
+                    complete_route(data, newR1, A, false, C, false, null, false);
+                    complete_route(data, newR2, D, false, B, true, E, false);
                 }
                 case AC_B -> {
-                    complete_route(newR1, A, false, C, true, null, false);
-                    complete_route(newR2, D, false, B, false, E, true);
+                    complete_route(data, newR1, A, false, C, true, null, false);
+                    complete_route(data, newR2, D, false, B, false, E, true);
                 }
                 case AC_B_ -> {
-                    complete_route(newR1, A, false, C, true, null, false);
-                    complete_route(newR2, D, false, B, true, E, true);
+                    complete_route(data, newR1, A, false, C, true, null, false);
+                    complete_route(data, newR2, D, false, B, true, E, true);
                 }
                 case A_CB -> {
-                    complete_route(newR1, A, true, C, false, null, false);
-                    complete_route(newR2, D, true, B, false, E, false);
+                    complete_route(data, newR1, A, true, C, false, null, false);
+                    complete_route(data, newR2, D, true, B, false, E, false);
                 }
                 case A_CB_ -> {
-                    complete_route(newR1, A, true, C, false, null, false);
-                    complete_route(newR2, D, true, B, true, E, false);
+                    complete_route(data, newR1, A, true, C, false, null, false);
+                    complete_route(data, newR2, D, true, B, true, E, false);
                 }
                 case A_C_B -> {
-                    complete_route(newR1, A, true, C, true, null, false);
-                    complete_route(newR2, D, true, B, false, E, true);
+                    complete_route(data, newR1, A, true, C, true, null, false);
+                    complete_route(data, newR2, D, true, B, false, E, true);
                 }
                 case A_C_B_ -> {
-                    complete_route(newR1, A, true, C, true, null, false);
-                    complete_route(newR2, D, true, B, true, E, true);
+                    complete_route(data, newR1, A, true, C, true, null, false);
+                    complete_route(data, newR2, D, true, B, true, E, true);
                 }
             }
             int change = newR1.dist + newR2.dist - r1.dist - r2.dist;
@@ -209,24 +210,24 @@ public class Three_opt extends Operator {
         }
     }
 
-    private void complete_route(Route r,
+    private void complete_route(Data data, Route r,
                                 List<Task> A, boolean reverseA,
                                 List<Task> B, boolean reverseB,
                                 List<Task> C, boolean reverseC) {
-        add_list(A, r, reverseA);
-        add_list(B, r, reverseB);
-        add_list(C, r, reverseC);
-        r.add(Data.depot);
+        add_list(data, A, r, reverseA);
+        add_list(data, B, r, reverseB);
+        add_list(data, C, r, reverseC);
+        r.add(data.depot);
     }
 
-    private void add_list(List<Task> list, Route r, boolean reverse) {
+    private void add_list(Data data, List<Task> list, Route r, boolean reverse) {
 
         if (list == null) return;
         if (!reverse) for (Task t : list) r.add(t);
         else {
             for (int i = list.size() - 1; i >= 0; i--) {
                 Task t = list.get(i);
-                if (t.type == TaskType.EDGE) t = Data.get_reverse_edge(t);
+                if (t.type == TaskType.EDGE) t = data.get_reverse_edge(t);
                 r.add(t);
             }
         }

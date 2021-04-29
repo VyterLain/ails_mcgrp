@@ -6,36 +6,36 @@ public class Data {
 
     // TODO: 增加原文中的初始化算法，在Data类中，添加depot到task的路径列表，可能实现：哈希表
 
-    public static String name;
-    public static int max_vehicles;
-    public static int max_capacity;
+    public String name;
+    public int max_vehicles;
+    public int max_capacity;
 
-    public static int nodes;
-    public static int arcs;
-    public static int edges;
+    public int nodes;
+    public int arcs;
+    public int edges;
 
-    public static int nodes_r;
-    public static int arcs_r;
-    public static int edges_r;
-    public static int total_requests;
+    public int nodes_r;
+    public int arcs_r;
+    public int edges_r;
+    public int total_requests;
 
-    public static int depot_node;
-    public static Task depot;
-    public static Task[] tasks;
-    public static Map<Task, Task> edge_set;
+    public int depot_node;
+    public Task depot;
+    public Task[] tasks;
+    public Map<Task, Task> edge_set;
 
-    public static int[][] raw_dist;
-    public static int[][] dist; // use Dijkstra algorithm
+    public int[][] raw_dist;
+    public int[][] dist; // use Dijkstra algorithm
 
     // graph[i][j] means task t( from i to j ) else null
-    public static Task[][] graph;
+    public Task[][] graph;
 
     // minimum traversal cost between r and t, for related_destructor
-    public static int max_min_travel_r_t;
+    public int max_min_travel_r_t;
     // the demand of task t
-    public static int max_demand_t;
+    public int max_demand_t;
 
-    public static void preprocess() {
+    public void preprocess() {
         dist = new int[nodes + 1][nodes + 1];
         for (int i = 0; i < nodes + 1; i++) {
             for (int j = 0; j < nodes + 1; j++)
@@ -74,7 +74,7 @@ public class Data {
     }
 
     // for test
-    public static void show() {
+    public void show() {
         String s = name + "=>" + "\n\t" +
                 "max v=" + max_vehicles + "\n\t" +
                 "max c=" + max_capacity + "\n\t" +
@@ -88,9 +88,9 @@ public class Data {
         System.out.println(s);
     }
 
-    public static Task get_reverse_edge(Task t) { return edge_set.getOrDefault(t, t); }
+    public Task get_reverse_edge(Task t) { return edge_set.getOrDefault(t, t); }
 
-    private static int get_max_min_travel_r_t() {
+    private int get_max_min_travel_r_t() {
         int res = 0;
         for (Task t : tasks) {
             if (t.type == TaskType.EDGE) {
@@ -114,7 +114,7 @@ public class Data {
         return res;
     }
 
-    private static int get_max_demand() {
+    private int get_max_demand() {
         int res = 0;
         for (Task t : tasks) {
             if (res < t.demand) res = t.demand;

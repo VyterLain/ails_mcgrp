@@ -1,5 +1,6 @@
 package util;
 
+import structure.Data;
 import structure.Solution;
 import structure.Task;
 import util.destroy.*;
@@ -30,6 +31,7 @@ public class Destroy_and_Repair_Pool {
     public int[][] pi = new int[7][3];
 
     public Destroy_and_Repair_Pool() {
+
         destructors[0] = random_destroy;
         destructors[1] = node_destroy;
         destructors[2] = arc_destroy;
@@ -46,8 +48,8 @@ public class Destroy_and_Repair_Pool {
         }
     }
 
-    public void destroy_repair(int d_index, int r_index, int k, Solution s) {
-        List<Task> removed = destructors[d_index].destruct(k, s);
+    public void destroy_repair(Data data, int d_index, int r_index, int k, Solution s) {
+        List<Task> removed = destructors[d_index].destruct(data, k, s);
         constructors[r_index].construct(removed, s);
     }
 

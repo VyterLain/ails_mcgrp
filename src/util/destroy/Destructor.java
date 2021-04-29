@@ -1,5 +1,6 @@
 package util.destroy;
 
+import structure.Data;
 import structure.Solution;
 import structure.Task;
 import util.MyParameter;
@@ -9,7 +10,7 @@ import java.util.Random;
 
 public interface Destructor {
 
-    public Random random = MyParameter.random;
+    Random random = MyParameter.random;
 
-    public List<Task> destruct(int k, Solution sol);
+    List<Task> destruct(Data data, int k, Solution sol);
 }

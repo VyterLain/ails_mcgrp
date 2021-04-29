@@ -28,10 +28,10 @@ public class Related_Destructor implements Destructor {
     //  with minimum distance from the last added task.
 
     @Override
-    public List<Task> destruct(int k, Solution sol) {
+    public List<Task> destruct(Data data, int k, Solution sol) {
 
         List<Task> removed = new ArrayList<>();
-        HashSet<Task> set = get_k_tasks_set(k, sol);
+        HashSet<Task> set = get_k_tasks_set(data, k, sol);
 
         for (Route r : sol.routes) {
             int i = 1;
@@ -65,7 +65,7 @@ public class Related_Destructor implements Destructor {
     // 4. mark the min tho(r,t) and related task t ( not equal to the tasks already in set )
     // 5. repeat k-1 times
 
-    private HashSet<Task> get_k_tasks_set(int k, Solution s) {
+    private HashSet<Task> get_k_tasks_set(Data data, int k, Solution s) {
 
         HashSet<Task> set = new HashSet<>();
 
@@ -94,10 +94,10 @@ public class Related_Destructor implements Destructor {
                     // do not consider task already been chosen
                     if (set.contains(t))
                         continue;
-                    int c_prime_r_t = get_c_prime_r_t(r, t);
+                    int c_prime_r_t = get_c_prime_r_t(data, r, t);
                     // get tho
-                    double tho = MyParameter.beta * (c_prime_r_t * 1.0 / Data.max_min_travel_r_t)
-                            + MyParameter.gamma * (Math.abs(r.demand - t.demand) * 1.0 / Data.max_demand_t)
+                    double tho = MyParameter.beta * (c_prime_r_t * 1.0 / data.max_min_travel_r_t)
+                            + MyParameter.gamma * (Math.abs(r.demand - t.demand) * 1.0 / data.max_demand_t)
                             + delta;
                     // update min_tho, route_index, the_task t
                     if (tho < min_r_t_tho) {
@@ -116,21 +116,21 @@ public class Related_Destructor implements Destructor {
         return set;
     }
 
-    private int get_c_prime_r_t(Task r, Task t) {
+    private int get_c_prime_r_t(Data data, Task r, Task t) {
         int res = -1;
         switch (r.type) {
             case NODE, ARC -> {
                 switch (t.type) {
-                    case NODE, ARC -> res = Data.dist[r.to][t.from];
-                    case EDGE -> res = Math.min(Data.dist[r.to][t.from], Data.dist[r.to][t.to]);
+                    case NODE, ARC -> res = data.dist[r.to][t.from];
+                    case EDGE -> res = Math.min(data.dist[r.to][t.from], data.dist[r.to][t.to]);
                 }
             }
             case EDGE -> {
                 switch (t.type) {
-                    case NODE, ARC -> res = Math.min(Data.dist[r.from][t.from], Data.dist[r.to][t.from]);
+                    case NODE, ARC -> res = Math.min(data.dist[r.from][t.from], data.dist[r.to][t.from]);
                     case EDGE -> res = Math.min(
-                            Math.min(Data.dist[r.from][t.from], Data.dist[r.to][t.from]),
-                            Math.min(Data.dist[r.from][t.to], Data.dist[r.to][t.to]));
+                            Math.min(data.dist[r.from][t.from], data.dist[r.to][t.from]),
+                            Math.min(data.dist[r.from][t.to], data.dist[r.to][t.to]));
                 }
             }
         }

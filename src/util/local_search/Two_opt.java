@@ -55,6 +55,7 @@ public class Two_opt extends Operator {
 
     @Override
     public boolean get_best_move(Solution s) {
+        Data data = s.data;
         route_1 = -1;
         route_2 = -1;
 //        cut_1 = -1;
@@ -79,9 +80,9 @@ public class Two_opt extends Operator {
                                 (_t1 == 1 || _t1 == r1.tasks.size() - 1
                                         || _t2 == 1 || _t2 == r2.tasks.size() - 1)) continue;
                         // at same route
-                        if (_r1 == _r2) intra_move(_r1, r1, _t1, _t2);
+                        if (_r1 == _r2) intra_move(data, _r1, r1, _t1, _t2);
                             // at different routes
-                        else inter_move(_r1, _r2, r1, r2, _t1, _t2);
+                        else inter_move(data, _r1, _r2, r1, r2, _t1, _t2);
                     }
                 }
             }
@@ -100,7 +101,7 @@ public class Two_opt extends Operator {
     // do intra or inter move
     // if can find better move,
     // update route index, cut index, best_move_saving, best_type
-    private void intra_move(int route_index, Route route,
+    private void intra_move(Data data, int route_index, Route route,
                             int cut_first, int cut_second) {
 //        List<Task> segment = new ArrayList<>();
 //        Route temp = new Route(route);
@@ -109,11 +110,11 @@ public class Two_opt extends Operator {
 //            if (t.type == TaskType.EDGE) t = Data.get_reverse_edge(t);
 //            temp.add(t, cut_first);
 //        }
-        Route temp = new Route(); // only travel once
+        Route temp = new Route(data); // only travel once
         for (int i = 1; i < cut_first; i++) temp.add(route.tasks.get(i));
         for (int i = cut_second - 1; i >= cut_first; i--) {
             Task t = route.tasks.get(i);
-            if (t.type == TaskType.EDGE) temp.add(Data.get_reverse_edge(t));
+            if (t.type == TaskType.EDGE) temp.add(data.get_reverse_edge(t));
             else temp.add(t);
         }
         for (int i = cut_second; i < route.tasks.size(); i++) temp.add(route.tasks.get(i));
@@ -130,7 +131,7 @@ public class Two_opt extends Operator {
         }
     }
 
-    private void inter_move(int route_index_first, int route_index_second,
+    private void inter_move(Data data, int route_index_first, int route_index_second,
                             Route route_first, Route route_second,
                             int cut_first, int cut_second) {
         List<Task> a1a2 = new ArrayList<>();
@@ -143,50 +144,50 @@ public class Two_opt extends Operator {
         int b3b4_demand = route_second.load - b1b2_demand;
         for (subType sub_type : subType.values()) {
             if (sub_type == subType._1) continue;
-            Route new1 = new Route();
-            Route new2 = new Route();
+            Route new1 = new Route(data);
+            Route new2 = new Route(data);
             switch (sub_type) {
                 case _2 -> {
-                    if (a1a2_demand + b3b4_demand > Data.max_capacity || b1b2_demand + a3a4_demand > Data.max_capacity)
+                    if (a1a2_demand + b3b4_demand > data.max_capacity || b1b2_demand + a3a4_demand > data.max_capacity)
                         continue;
-                    complete_inter_new_route(a1a2, false, b3b4, false, new1);
-                    complete_inter_new_route(b1b2, false, a3a4, false, new2);
+                    complete_inter_new_route(data, a1a2, false, b3b4, false, new1);
+                    complete_inter_new_route(data, b1b2, false, a3a4, false, new2);
                 }
                 case _3 -> {
-                    if (a1a2_demand + b3b4_demand > Data.max_capacity || b1b2_demand + a3a4_demand > Data.max_capacity)
+                    if (a1a2_demand + b3b4_demand > data.max_capacity || b1b2_demand + a3a4_demand > data.max_capacity)
                         continue;
-                    complete_inter_new_route(a1a2, false, b3b4, false, new1);
-                    complete_inter_new_route(a3a4, false, b1b2, true, new2);
+                    complete_inter_new_route(data, a1a2, false, b3b4, false, new1);
+                    complete_inter_new_route(data, a3a4, false, b1b2, true, new2);
                 }
                 case _4 -> {
-                    if (a1a2_demand + b3b4_demand > Data.max_capacity || b1b2_demand + a3a4_demand > Data.max_capacity)
+                    if (a1a2_demand + b3b4_demand > data.max_capacity || b1b2_demand + a3a4_demand > data.max_capacity)
                         continue;
-                    complete_inter_new_route(a1a2, false, b3b4, false, new1);
-                    complete_inter_new_route(a3a4, true, b1b2, false, new2);
+                    complete_inter_new_route(data, a1a2, false, b3b4, false, new1);
+                    complete_inter_new_route(data, a3a4, true, b1b2, false, new2);
                 }
                 case _5 -> {
-                    if (a1a2_demand + b1b2_demand > Data.max_capacity || a3a4_demand + b3b4_demand > Data.max_capacity)
+                    if (a1a2_demand + b1b2_demand > data.max_capacity || a3a4_demand + b3b4_demand > data.max_capacity)
                         continue;
-                    complete_inter_new_route(a1a2, false, b1b2, true, new1);
-                    complete_inter_new_route(a3a4, false, b3b4, false, new2);
+                    complete_inter_new_route(data, a1a2, false, b1b2, true, new1);
+                    complete_inter_new_route(data, a3a4, false, b3b4, false, new2);
                 }
                 case _6 -> {
-                    if (a1a2_demand + b1b2_demand > Data.max_capacity || a3a4_demand + b3b4_demand > Data.max_capacity)
+                    if (a1a2_demand + b1b2_demand > data.max_capacity || a3a4_demand + b3b4_demand > data.max_capacity)
                         continue;
-                    complete_inter_new_route(a1a2, false, b1b2, true, new1);
-                    complete_inter_new_route(b3b4, false, a3a4, false, new2);
+                    complete_inter_new_route(data, a1a2, false, b1b2, true, new1);
+                    complete_inter_new_route(data, b3b4, false, a3a4, false, new2);
                 }
                 case _7 -> {
-                    if (a1a2_demand + b3b4_demand > Data.max_capacity || b1b2_demand + a3a4_demand > Data.max_capacity)
+                    if (a1a2_demand + b3b4_demand > data.max_capacity || b1b2_demand + a3a4_demand > data.max_capacity)
                         continue;
-                    complete_inter_new_route(a1a2, false, b3b4, true, new1);
-                    complete_inter_new_route(b1b2, false, a3a4, false, new2);
+                    complete_inter_new_route(data, a1a2, false, b3b4, true, new1);
+                    complete_inter_new_route(data, b1b2, false, a3a4, false, new2);
                 }
                 case _8 -> {
-                    if (a1a2_demand + b3b4_demand > Data.max_capacity || b1b2_demand + a3a4_demand > Data.max_capacity)
+                    if (a1a2_demand + b3b4_demand > data.max_capacity || b1b2_demand + a3a4_demand > data.max_capacity)
                         continue;
-                    complete_inter_new_route(a1a2, true, b3b4, false, new1);
-                    complete_inter_new_route(b1b2, false, a3a4, false, new2);
+                    complete_inter_new_route(data, a1a2, true, b3b4, false, new1);
+                    complete_inter_new_route(data, b1b2, false, a3a4, false, new2);
                 }
             }
             int change = new1.dist + new2.dist - route_first.dist - route_second.dist;
@@ -243,20 +244,20 @@ public class Two_opt extends Operator {
 //        System.out.println();
     }
 
-    private void complete_inter_new_route(List<Task> A, boolean reverseA,
+    private void complete_inter_new_route(Data data, List<Task> A, boolean reverseA,
                                           List<Task> B, boolean reverseB,
                                           Route r) {
-        add_inter_list(A, r, reverseA);
-        add_inter_list(B, r, reverseB);
-        r.add(Data.depot);
+        add_inter_list(data, A, r, reverseA);
+        add_inter_list(data, B, r, reverseB);
+        r.add(data.depot);
     }
 
-    private void add_inter_list(List<Task> list, Route r, boolean reverse) {
+    private void add_inter_list(Data data, List<Task> list, Route r, boolean reverse) {
         if (!reverse) for (Task t : list) r.add(t);
         else {
             for (int i = list.size() - 1; i >= 0; i--) {
                 Task t = list.get(i);
-                if (t.type == TaskType.EDGE) t = Data.get_reverse_edge(t);
+                if (t.type == TaskType.EDGE) t = data.get_reverse_edge(t);
                 r.add(t);
             }
         }

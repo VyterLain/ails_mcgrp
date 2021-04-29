@@ -7,15 +7,19 @@ import java.util.List;
 
 public class Solution {
 
+    public final Data data;
+
     public int dist;
 
     public List<Route> routes = new ArrayList<>();
 
-    public Solution() {
+    public Solution(Data data) {
+        this.data = data;
         this.dist = 0;
     }
 
     public Solution(Solution sol) {
+        this.data = sol.data;
         this.dist = sol.dist;
         for (Route r : sol.routes) this.routes.add(new Route(r));
     }
@@ -35,24 +39,24 @@ public class Solution {
     }
 
     public boolean check_feasible() {
-        HashSet<Task> task_set = new HashSet<>(Arrays.asList(Data.tasks.clone()));
+        HashSet<Task> task_set = new HashSet<>(Arrays.asList(data.tasks.clone()));
 
         for (Route r : routes) {
             int r_load = 0;
             for (Task t : r.tasks) {
                 // skip DEPOT
-                if (t.equals(Data.depot)) continue;
+                if (t.equals(data.depot)) continue;
                 r_load += t.demand;
                 if (t.type==TaskType.EDGE) {
-                    if (!task_set.contains(t) && !task_set.contains(Data.get_reverse_edge(t))) return false;
+                    if (!task_set.contains(t) && !task_set.contains(data.get_reverse_edge(t))) return false;
                 }else
                     if (!task_set.contains(t)) return false;
                 task_set.remove(t);
-                task_set.remove(Data.get_reverse_edge(t));
+                task_set.remove(data.get_reverse_edge(t));
             }
-            if (r_load > Data.max_capacity) return false;
-            if (!(r.tasks.get(0).equals(Data.depot)
-                    && r.tasks.get(r.tasks.size() - 1).equals(Data.depot))) return false;
+            if (r_load > data.max_capacity) return false;
+            if (!(r.tasks.get(0).equals(data.depot)
+                    && r.tasks.get(r.tasks.size() - 1).equals(data.depot))) return false;
         }
 
         return task_set.isEmpty();

@@ -12,6 +12,7 @@ import java.util.Random;
 public class Algorithm {
 
     private final Random random = MyParameter.random;
+    private Data data;
     private double start_time;
 
     private int destructor_selected;
@@ -27,7 +28,8 @@ public class Algorithm {
     private final LS_Operator_Pool opt_LS = new LS_Operator_Pool();
     private final Destroy_and_Repair_Pool opt_des_con = new Destroy_and_Repair_Pool();
 
-    public Solution run() {
+    public Solution run(Data data) {
+        this.data = data;
         AILS();
         return x_incumbent;
     }
@@ -40,7 +42,7 @@ public class Algorithm {
         Initialize_Roulette_Probabilities();
 
         // Construct first solution and take to deep local optimum
-        Solution x_init = opt_init.greedyWay();
+        Solution x_init = opt_init.greedyWay(data);
         // TODO: bin packing算法在augment merge无效后调用
 
         x_incumbent = opt_LS.LS_Full(x_init);
@@ -90,7 +92,7 @@ public class Algorithm {
             if (MyParameter.tho_LS_full > random.nextDouble())
                 opt_LS.LS_Full(x_current);
             else {
-                if ((Data.total_requests < 200)) opt_LS.LS_1(x_current);
+                if ((data.total_requests < 200)) opt_LS.LS_1(x_current);
                 else opt_LS.LS_2(x_current);
             }
             KickCountdown -= 1;
@@ -105,8 +107,8 @@ public class Algorithm {
             return false;
         } else {
             // Nothing has happened for a while, make a major, random destroy and repair
-            int k = random.nextInt(Data.total_requests - Data.total_requests / 2)
-                    + Data.total_requests / 2;
+            int k = random.nextInt(data.total_requests - data.total_requests / 2)
+                    + data.total_requests / 2;
             x_localIncumbent = Random_Destroy_and_Repair(k);
             x_localIncumbent = opt_LS.LS_Full(x_localIncumbent);
 //            x_current = new Solution(x_localIncumbent);
@@ -124,7 +126,7 @@ public class Algorithm {
      * for a number of tasks randomly drawn k value
      */
     private Solution Random_Destroy_and_Repair(int k) {
-        List<Task> removed = opt_des_con.random_destroy.destruct(k, x_localIncumbent);
+        List<Task> removed = opt_des_con.random_destroy.destruct(data, k, x_localIncumbent);
         opt_des_con.random_repair.construct(removed, x_localIncumbent);
         return x_localIncumbent;
     }
@@ -162,7 +164,7 @@ public class Algorithm {
         }
         destructor_selected = chosen_pair / opt_des_con.pi[0].length;
         constructor_selected = chosen_pair % opt_des_con.pi[0].length;
-        opt_des_con.destroy_repair(destructor_selected, constructor_selected, k, x_current);
+        opt_des_con.destroy_repair(data, destructor_selected, constructor_selected, k, x_current);
 
         return x_current;
     }

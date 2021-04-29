@@ -14,19 +14,16 @@ public class Main {
         } else for (int i = 0; i < args.length; i = i + 2) config(args[i], args[i + 1]);
         String pre = "src/data/";
         String[] dir_paths = new String[]{"bhw", "cbmix"};
+        Algorithm algo = new Algorithm();
         try {
             for (String dir_path : dir_paths) {
-                File dir = new File(pre + dir_path);
-                String[] files_name = dir.list();
-                assert files_name != null;
-                for (String file_name : files_name) {
-//                    ReadData.get(pre + dir_path + '/' + file_name);
-                    ReadData.get(pre + dir_path + "/BHW6.dat");
-                    Data.show();
-                    Data.preprocess();
-                    MyParameter.init();
-                    Algorithm algo = new Algorithm();
-                    Solution sol = algo.run();
+                Data[] all_data = ReadData.getAll(pre + dir_path);
+                for (Data data : all_data) {
+//                    data = ReadData.get(pre + dir_path + "/BHW6.dat");
+                    data.show();
+                    data.preprocess();
+                    MyParameter.init(data);
+                    Solution sol = algo.run(data);
                     WriteData.write(sol, dir_path);
                     System.out.println(sol);
                     break;
@@ -41,7 +38,8 @@ public class Main {
     private static void config(String type, String arg) {
         switch (type) {
             case "-s":
-                MyParameter.setRandomSeed(Integer.parseInt(arg));
+                if (arg.equals("time")) MyParameter.setRandomSeed();
+                else MyParameter.setRandomSeed(Integer.parseInt(arg));
                 break;
             case "-t":
                 MyParameter.setRunningTime(Double.parseDouble(arg));

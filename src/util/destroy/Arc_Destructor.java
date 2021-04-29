@@ -11,9 +11,9 @@ public class Arc_Destructor implements Destructor {
     //  otherwise the random destructor is used.
 
     @Override
-    public List<Task> destruct(int k, Solution sol) {
-        if (k > Data.arcs_r)
-            return new Random_Destructor().destruct(k, sol);
+    public List<Task> destruct(Data data, int k, Solution sol) {
+        if (k > data.arcs_r)
+            return new Random_Destructor().destruct(data, k, sol);
 
         List<Task> removed = new ArrayList<>();
 

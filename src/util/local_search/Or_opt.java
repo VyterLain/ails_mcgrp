@@ -40,6 +40,7 @@ public class Or_opt extends Operator {
 
     @Override
     public boolean get_best_move(Solution s) {
+        Data data = s.data;
         route_remove = -1;
         route_insert = -1;
         index_remove = -1;
@@ -49,16 +50,21 @@ public class Or_opt extends Operator {
             Route r_remove = s.routes.get(r_1);
             // for every segment
             for (int t_1 = 1; t_1 < r_remove.tasks.size() - l; t_1++) {
-                int demand_change = 0;
-                List<Task> task_list = r_remove.tasks.subList(t_1, t_1 + l);
-                for (Task t : task_list) demand_change += t.demand;
                 for (int r_2 = 0; r_2 < s.routes.size(); r_2++) {
                     Route r_insert = s.routes.get(r_2);
                     // for every possible insertion pos
                     for (int t_2 = 1; t_2 < r_insert.tasks.size() - 1; t_2++) {
                         // insertion pos is in the remove task
                         if (r_1 == r_2 && t_1 <= t_2 && t_1 >= t_2 - l) continue;
-                        if (r_1 != r_2 && r_insert.load + demand_change > Data.max_capacity) continue;
+                        if (r_1 != r_2) {
+                            // calc demand
+                            int demand_change = 0;
+                            List<Task> task_list = r_remove.tasks.subList(t_1, t_1 + l);
+                            for (Task t : task_list) demand_change += t.demand;
+                            if (r_insert.load + demand_change > data.max_capacity)
+                                continue;
+                        }
+                        // calc change
                         int change = 0;
                         int pre_remove = r_remove.tasks.get(t_1 - 1).to;
                         int next_remove = r_remove.tasks.get(t_1 + l).from;
@@ -68,11 +74,9 @@ public class Or_opt extends Operator {
                         int list_tail = r_remove.tasks.get(t_1 + l - 1).to;
                         // do not need to consider the cost of segment
                         // when remove
-                        change -= (Data.dist[pre_remove][list_head] + Data.dist[list_tail][next_remove]);
-                        change += Data.dist[pre_remove][next_remove];
+                        change += (data.dist[pre_remove][next_remove] - data.dist[pre_remove][list_head] - data.dist[list_tail][next_remove]);
                         // when add
-                        change -= Data.dist[pre_insert][next_insert];
-                        change += (Data.dist[pre_insert][list_head] + Data.dist[list_tail][next_insert]);
+                        change += (data.dist[pre_insert][list_head] + data.dist[list_tail][next_insert] - data.dist[pre_insert][next_insert]);
                         if (change < 0 && change < best_move_saving) {
                             route_remove = r_1;
                             route_insert = r_2;

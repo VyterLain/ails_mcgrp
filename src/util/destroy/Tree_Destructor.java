@@ -15,10 +15,10 @@ public class Tree_Destructor implements Destructor {
     //  The growth is halted as soon as k tasks (of any kind) are encountered.
 
     @Override
-    public List<Task> destruct(int k, Solution sol) {
+    public List<Task> destruct(Data data, int k, Solution sol) {
 
         List<Task> removed = new ArrayList<>();
-        HashSet<Task> set = bfs_tree_k_task(k, sol);
+        HashSet<Task> set = bfs_tree_k_task(data, k, sol);
 
         for (Route r : sol.routes) {
             int i = 1;
@@ -38,7 +38,7 @@ public class Tree_Destructor implements Destructor {
         return removed;
     }
 
-    private HashSet<Task> bfs_tree_k_task(int k, Solution s) {
+    private HashSet<Task> bfs_tree_k_task(Data data, int k, Solution s) {
         HashSet<Task> set = new HashSet<>();
         Queue<Task> queue = new LinkedList<>();
         // 1. select a task randomly
@@ -51,16 +51,16 @@ public class Tree_Destructor implements Destructor {
             // get the task from queue
             Task t = queue.poll();
             // next task connected to current task t, add them into queue
-            for (int i = 1; i <= Data.nodes; i++) {
-                if (Data.graph[t.to][i] != null &&
-                        (Data.graph[t.to][i].type == TaskType.DEAD
-                                || !set.contains(Data.graph[t.to][i]))) {
-                    queue.offer(Data.graph[t.to][i]);
+            for (int i = 1; i <= data.nodes; i++) {
+                if (data.graph[t.to][i] != null &&
+                        (data.graph[t.to][i].type == TaskType.DEAD
+                                || !set.contains(data.graph[t.to][i]))) {
+                    queue.offer(data.graph[t.to][i]);
                 }
             }
             // add task t into set
             if (t.type != TaskType.DEAD)
-                if (!(set.contains(t) || set.contains(Data.get_reverse_edge(t)))) set.add(t);
+                if (!(set.contains(t) || set.contains(data.get_reverse_edge(t)))) set.add(t);
         }
         return set;
     }
