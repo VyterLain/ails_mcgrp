@@ -6,14 +6,19 @@ import java.util.List;
 
 public class Initialization {
 
-    // TODO: 增加原文中的初始化算法，包括bin packing和augment merge
+    public Solution articleWay(Data data) {
+        Solution s = augmentMerge(data);
+        if (data.max_vehicles > 0 && s.routes.size() > data.max_vehicles)
+            s = binPacking(data);
+        return s;
+    }
 
-    public Solution augmentMerge(){
+    public Solution augmentMerge(Data data) {
         // TODO
         return null;
     }
 
-    public Solution binPacking() {
+    public Solution binPacking(Data data) {
         // TODO
         return null;
     }

@@ -23,9 +23,10 @@ public class Regret_Constructor extends Constructor {
 
     @Override
     public void construct(List<Task> remains, Solution sol) {
-        Set<Task> set = list2set(remains);
+        Data data = sol.data;
+        Set<Task> set = list2set(remains, sol.data);
         while (set.size() > 0) {
-            update_regret(set, sol);
+            update_regret(set, sol, data);
             // find the max regret
             int index = 0;
             int max_regret = regret.get(0);
@@ -37,17 +38,17 @@ public class Regret_Constructor extends Constructor {
             }
             if (insert_route.get(index) >= sol.routes.size()) {
                 // add a new route
-                Route r = new Route();
-                r.add(Data.depot);
+                Route r = new Route(data);
+                r.add(data.depot);
                 sol.add(r);
             }
             sol.routes.get(insert_route.get(index)).add(tasks.get(index), insert_index.get(index));
             set.remove(tasks.get(index));
-            if (tasks.get(index).type == TaskType.EDGE) set.remove(Data.get_reverse_edge(tasks.get(index)));
+            if (tasks.get(index).type == TaskType.EDGE) set.remove(data.get_reverse_edge(tasks.get(index)));
         }
     }
 
-    private void update_regret(Set<Task> set, Solution s) {
+    private void update_regret(Set<Task> set, Solution s, Data data) {
         regret = new ArrayList<>(); // second_cost - first_cost
         insert_route = new ArrayList<>();
         insert_index = new ArrayList<>();
@@ -65,7 +66,7 @@ public class Regret_Constructor extends Constructor {
 
             for (int i = 0; i < s.routes.size(); i++) {
                 Route r = s.routes.get(i);
-                if (r.load + t.demand > Data.max_capacity)
+                if (r.load + t.demand > data.max_capacity)
                     continue;
                 // it means there is a route can add this task,
                 // so "need_new_route" = false
@@ -77,7 +78,7 @@ public class Regret_Constructor extends Constructor {
 
                     // get the insertion cost
                     // when add into route i at index j
-                    int change = t.dist - Data.dist[pre_node][nex_node] + (Data.dist[pre_node][t.from] + Data.dist[t.to][nex_node]);
+                    int change = t.dist - data.dist[pre_node][nex_node] + (data.dist[pre_node][t.from] + data.dist[t.to][nex_node]);
 
                     // update first_cost second_cost
                     if (change < first_cost) {

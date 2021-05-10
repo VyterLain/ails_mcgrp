@@ -14,13 +14,13 @@ public abstract class Constructor {
 
     public abstract void construct(List<Task> remains, Solution sol);
 
-    public Set<Task> list2set(List<Task> list) {
+    public Set<Task> list2set(List<Task> list, Data data) {
         Set<Task> set = new HashSet<>(list);
-        for (Task t : list) if (t.type == TaskType.EDGE) set.add(Data.get_reverse_edge(t));
+        for (Task t : list) if (t.type == TaskType.EDGE) set.add(data.get_reverse_edge(t));
         return set;
     }
 
-    public int get_add_saving(Route r, int k, Task t) {
-        return t.dist - Data.dist[r.tasks.get(k - 1).to][r.tasks.get(k).from] + Data.dist[r.tasks.get(k - 1).to][t.from] + Data.dist[t.to][r.tasks.get(k).from];
-    }
+//    public int get_add_saving(Route r, int k, Task t) {
+//        return t.dist - Data.dist[r.tasks.get(k - 1).to][r.tasks.get(k).from] + Data.dist[r.tasks.get(k - 1).to][t.from] + Data.dist[t.to][r.tasks.get(k).from];
+//    }
 }

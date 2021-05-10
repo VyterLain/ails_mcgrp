@@ -15,6 +15,7 @@ public class MyParameter {
     public static double tho_LS_full = 0.15;
     public static int LS_type = 0;
     public static int ITER_BEFORE_KICK;
+    public static int BIG_NUM = 1000000;
 
     public static void setRandomSeed(int seed) {
         random = new Random(seed);

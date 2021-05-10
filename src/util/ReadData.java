@@ -44,7 +44,7 @@ public class ReadData {
 
         data.raw_dist = new int[data.nodes + 1][data.nodes + 1];
         for (int[] a : data.raw_dist)
-            Arrays.fill(a, 10000);
+            Arrays.fill(a, MyParameter.BIG_NUM);
 
         br.readLine();
         br.readLine();

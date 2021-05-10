@@ -35,8 +35,11 @@ public class Data {
     // the demand of task t
     public int max_demand_t;
 
+    public Segment[][] segments;
+
     public void preprocess() {
         dist = new int[nodes + 1][nodes + 1];
+        segments = new Segment[nodes + 1][nodes + 1];
         for (int i = 0; i < nodes + 1; i++) {
             for (int j = 0; j < nodes + 1; j++)
                 if (i != j) dist[i][j] = raw_dist[i][j];
@@ -88,7 +91,9 @@ public class Data {
         System.out.println(s);
     }
 
-    public Task get_reverse_edge(Task t) { return edge_set.getOrDefault(t, t); }
+    public Task get_reverse_edge(Task t) {
+        return edge_set.getOrDefault(t, t);
+    }
 
     private int get_max_min_travel_r_t() {
         int res = 0;

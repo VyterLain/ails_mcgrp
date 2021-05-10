@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AILS_MCGRP.iml" filepath="$PROJECT_DIR$/AILS_MCGRP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ails_mcgrp.iml" filepath="$PROJECT_DIR$/ails_mcgrp.iml" />
     </modules>
   </component>
 </project>

@@ -1,7 +1,4 @@
-import structure.Data;
-import structure.Route;
-import structure.Solution;
-import structure.Task;
+import structure.*;
 import util.MyParameter;
 import util.ReadData;
 import util.destroy.*;
@@ -20,6 +17,8 @@ public class FunctionTest {
             data.preprocess();
             MyParameter.init(data);
 
+            test_initial(data);
+            test_segment(data);
 //            test_route_function(data);
 //            test_destroy_repair(data);
 //            test_ls_operators(data);
@@ -27,6 +26,22 @@ public class FunctionTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static void test_initial(Data data) {
+        // TODO
+    }
+
+    private static void test_segment(Data data) {
+        Segment s1 = new Segment(new int[]{6, 4, 3, 2, 1, 8, 9}, 100, data);
+        Segment s2 = new Segment(new int[]{3, 2, 1, 8}, 50, data);
+        Segment s3 = new Segment(new int[]{4, 3, 0, 7}, 50, data);
+        Segment s4 = new Segment(new int[]{1, 8, 9, 5}, 50, data);
+        Segment s5 = new Segment(new int[]{4}, 5, data);
+        System.out.println(s1 + " domain " + s2 + " is " + s1.domain(s2));
+        System.out.println(s1 + " domain " + s3 + " is " + s1.domain(s3));
+        System.out.println(s1 + " domain " + s4 + " is " + s1.domain(s4));
+        System.out.println(s1 + " domain " + s5 + " is " + s1.domain(s5));
     }
 
     private static void test_running_efficiency(Data data) {

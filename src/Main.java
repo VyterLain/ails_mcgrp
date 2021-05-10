@@ -4,8 +4,6 @@ import util.MyParameter;
 import util.ReadData;
 import util.WriteData;
 
-import java.io.File;
-
 public class Main {
     public static void main(String[] args) {
         if (args.length % 2 != 0) {
