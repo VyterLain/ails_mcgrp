@@ -5,17 +5,6 @@ import java.util.List;
 
 public class Route {
 
-    // 1."add" function will consider that
-    //   whether the edge is reverse
-    // 2."remove" function only check the edge
-    //   by the next_nodes list
-    // 3.every time we use "add" or "remove",
-    //   the next_nodes list will update
-    // 4.the next_nodes list is fixed for a typical route
-    //   but the edge in the tasks list not
-    // 5."refresh" function can help to
-    //   verify and modify the edge
-    //   by the next_nodes list
     private final Data data;
 
     public int dist = 0;
@@ -63,9 +52,6 @@ public class Route {
             System.exit(1);
         }
 
-        // pre_node(pre_task), task(from_node, to_node), nex_node(next_task)
-        //         index-1             add                     index
-
         // get pre node, and, next node
         int pre_node = tasks.get(index - 1).to;
         int nex_node = tasks.get(index).from;
@@ -96,9 +82,6 @@ public class Route {
             System.exit(1);
         }
 
-        // pre_node(pre_task), task(from_node, to_node), nex_node(next_task)
-        //         index-1              remove                index+1
-
         // get pre node, and, next node
         int pre_node = tasks.get(index - 1).to;
         int nex_node = tasks.get(index + 1).from;
@@ -120,6 +103,69 @@ public class Route {
             remove(i);
             add(data.get_reverse_edge(t), i);
         }
+    }
+
+    public boolean merge(Route obj) {
+        if (obj.tasks.size() <= 2) return true;
+        if (obj.load + this.load > data.max_capacity) return false;
+        List<Integer> add_index_list = new ArrayList<>();
+        int check_index = 1;
+        for (int i = 1; i < tasks.size() && check_index < obj.tasks.size() - 1; i++) {
+            if (tasks.get(i - 1).to == tasks.get(i).from) continue;
+            Segment s = data.segments[tasks.get(i - 1).to][tasks.get(i).from];
+            Task t = obj.tasks.get(check_index);
+            if (t.type == TaskType.NODE) {
+                for (int j = 0; j < s.list.length; j++) {
+                    if (s.list[j] == t.from) {
+                        add_index_list.add(i);
+                        check_index++;
+                        break;
+                    }
+                }
+            } else {
+                for (int j = 1; j < s.list.length; j++) {
+                    if (s.list[j - 1] == t.from && s.list[j] == t.to) {
+                        add_index_list.add(i);
+                        check_index++;
+                        break;
+                    }
+                }
+            }
+        }
+        if (add_index_list.size() == obj.tasks.size() - 2) {
+            for (int i = 0; i < add_index_list.size(); i++) {
+                add(obj.tasks.get(i + 1), add_index_list.get(i) + i);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public int if_connect(Route obj) {
+        int last2 = tasks.get(tasks.size() - 2).to;
+        int last1 = tasks.get(tasks.size() - 1).from;
+        int first2 = obj.tasks.get(1).from;
+        int first1 = obj.tasks.get(0).to;
+        return data.dist[last2][first2] - data.dist[last2][last1] - data.dist[first1][first2];
+    }
+
+    public void connect(Route obj) {
+        this.load += obj.load;
+        this.nodes += (obj.nodes - 2);
+        this.arcs += obj.arcs;
+        this.edges += obj.edges;
+        this.dist += (obj.dist + if_connect(obj));
+        this.tasks.remove(tasks.size() - 1);
+        this.tasks.addAll(obj.tasks.subList(1, obj.tasks.size()));
+    }
+
+    public Segment get_full_path() {
+        Segment res = new Segment(new int[]{tasks.get(0).to}, data);
+        for (int i = 1; i < tasks.size(); i++) {
+            res = res.connect(data.segments[res.end][tasks.get(i).from]);
+            res = res.connect(tasks.get(i));
+        }
+        return res;
     }
 
     @Override

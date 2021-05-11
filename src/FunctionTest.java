@@ -5,20 +5,21 @@ import util.destroy.*;
 import util.local_search.*;
 import util.repair.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FunctionTest {
 
     public static void main(String[] args) {
         try {
-//            ReadData.get("src/data/cbmix/CBMix22.dat");
-            Data data = ReadData.get("src/data/bhw/BHW6.dat");
+//            Data data = ReadData.get("src/data/cbmix/CBMix23.dat");
+            Data data = ReadData.get("src/data/bhw/BHW1.dat");
             data.show();
             data.preprocess();
             MyParameter.init(data);
 
             test_initial(data);
-            test_segment(data);
+//            test_segment(data);
 //            test_route_function(data);
 //            test_destroy_repair(data);
 //            test_ls_operators(data);
@@ -29,19 +30,22 @@ public class FunctionTest {
     }
 
     private static void test_initial(Data data) {
-        // TODO
+        Initialization init = new Initialization();
+        Solution s = init.augmentMerge(data);
+        System.out.println(s);
+        System.out.println(s.check_feasible());
     }
 
     private static void test_segment(Data data) {
-        Segment s1 = new Segment(new int[]{6, 4, 3, 2, 1, 8, 9}, 100, data);
-        Segment s2 = new Segment(new int[]{3, 2, 1, 8}, 50, data);
-        Segment s3 = new Segment(new int[]{4, 3, 0, 7}, 50, data);
-        Segment s4 = new Segment(new int[]{1, 8, 9, 5}, 50, data);
-        Segment s5 = new Segment(new int[]{4}, 5, data);
-        System.out.println(s1 + " domain " + s2 + " is " + s1.domain(s2));
-        System.out.println(s1 + " domain " + s3 + " is " + s1.domain(s3));
-        System.out.println(s1 + " domain " + s4 + " is " + s1.domain(s4));
-        System.out.println(s1 + " domain " + s5 + " is " + s1.domain(s5));
+        Segment s1 = new Segment(new int[]{6, 4, 3, 2, 1, 8, 9}, data);
+        Segment s2 = new Segment(new int[]{3, 2, 1, 8}, data);
+        Segment s3 = new Segment(new int[]{4, 3, 1, 9}, data);
+        Segment s4 = new Segment(new int[]{1, 8, 9, 5}, data);
+        Segment s5 = new Segment(new int[]{4}, data);
+        Segment s6 = new Segment(new int[]{7, 4}, data);
+        System.out.println(s6 + " connect " + s5 + " is " + s6.connect(s5));
+        System.out.println(s1 + " connect " + data.tasks[3] + " is " + s1.connect(data.tasks[3]));
+        System.out.println(s1 + " connect " + data.tasks[12] + " is " + s1.connect(data.tasks[12]));
     }
 
     private static void test_running_efficiency(Data data) {

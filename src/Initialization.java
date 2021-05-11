@@ -13,9 +13,70 @@ public class Initialization {
         return s;
     }
 
+    /**
+     * step 1: 初始化所有task单独形成一个路径
+     * step 2: 如果一个路径被另一个路径包含，那么将两条路径合并
+     * step 3: 在满足容量约束的情况下将两条路径合并，并计算其成本节省量，选择最大值
+     * step 4: 重复第3步直到结束
+     */
     public Solution augmentMerge(Data data) {
-        // TODO
-        return null;
+        List<Route> route_pool = new ArrayList<>();
+        // step 1
+        for (Task t : data.tasks) {
+            Route r = new Route(data);
+            r.add(t);
+            r.add(data.depot);
+            route_pool.add(r);
+        }
+        // step 2
+        boolean has_domain = true;
+        while (has_domain) {
+            has_domain = false;
+            for (int i = 0; i < route_pool.size(); i++) {
+                int j = 0;
+                Route r = route_pool.get(i);
+                while (j < route_pool.size()) {
+                    if (i == j) {
+                        j++;
+                        continue;
+                    }
+                    if (r.merge(route_pool.get(j))) {
+                        has_domain = true;
+                        route_pool.remove(j);
+                    } else j++;
+                }
+            }
+        }
+        // step 3,4
+        boolean has_merge = true;
+        while (has_merge) {
+            has_merge = false;
+            int pre = -1;
+            int successor = -1;
+            int min_change = Integer.MAX_VALUE;
+            for (int i = 0; i < route_pool.size(); i++) {
+                Route r1 = route_pool.get(i);
+                for (int j = 0; j < route_pool.size(); j++) {
+                    if (i == j) continue;
+                    Route r2 = route_pool.get(j);
+                    if (r1.load + r2.load > data.max_capacity) continue;
+                    int change = r1.if_connect(r2);
+                    if (change < min_change) {
+                        pre = i;
+                        successor = j;
+                        min_change = change;
+                        has_merge = true;
+                    }
+                }
+            }
+            if (has_merge) {
+                route_pool.get(pre).connect(route_pool.get(successor));
+                route_pool.remove(successor);
+            }
+        }
+        Solution s = new Solution(data);
+        for (Route r : route_pool) s.add(r);
+        return s;
     }
 
     public Solution binPacking(Data data) {

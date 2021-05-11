@@ -42,8 +42,8 @@ public class Algorithm {
         Initialize_Roulette_Probabilities();
 
         // Construct first solution and take to deep local optimum
-        Solution x_init = opt_init.greedyWay(data);
-        // TODO: bin packing算法在augment merge无效后调用
+//        Solution x_init = opt_init.greedyWay(data);
+        Solution x_init = opt_init.articleWay(data);
 
         x_incumbent = opt_LS.LS_Full(x_init);
         x_localIncumbent = new Solution(x_incumbent);

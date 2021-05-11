@@ -1,10 +1,13 @@
 package structure;
 
+import util.MyParameter;
+
+//import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Data {
-
-    // TODO: 增加原文中的初始化算法，在Data类中，添加depot到task的路径列表，可能实现：哈希表
 
     public String name;
     public int max_vehicles;
@@ -42,7 +45,15 @@ public class Data {
         segments = new Segment[nodes + 1][nodes + 1];
         for (int i = 0; i < nodes + 1; i++) {
             for (int j = 0; j < nodes + 1; j++)
-                if (i != j) dist[i][j] = raw_dist[i][j];
+                if (i != j) {
+                    dist[i][j] = raw_dist[i][j];
+                    if (raw_dist[i][j] < MyParameter.BIG_NUM) {
+                        List<Integer> path = new ArrayList<>();
+                        path.add(i);
+                        path.add(j);
+                        segments[i][j] = new Segment(path, this);
+                    }
+                }
         }
 
         // Dijkstra algorithm, o(n^2)
@@ -63,9 +74,12 @@ public class Data {
                 // mark
                 visited[min_n] = true;
                 // update other node
-                for (int j = 1; j <= nodes; j++)
-                    if (!visited[j] && row_dist[j] > row_dist[min_n] + raw_dist[min_n][j])
+                for (int j = 1; j <= nodes; j++) {
+                    if (!visited[j] && row_dist[j] > row_dist[min_n] + raw_dist[min_n][j]) {
                         row_dist[j] = row_dist[min_n] + raw_dist[min_n][j];
+                        segments[node][j] = segments[node][min_n].connect(segments[min_n][j]);
+                    }
+                }
             }
         }
 

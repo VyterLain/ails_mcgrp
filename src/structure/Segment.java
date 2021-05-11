@@ -10,24 +10,21 @@ public class Segment {
     /* shortest path from A to B*/
     public int start;
     public int end;
-    public int cost;
     public int[] list;
     public final Data data;
 
-    public Segment(List<Integer> path, int cost, Data data) {
+    public Segment(List<Integer> path, Data data) {
         this.data = data;
         list = path.stream().mapToInt(Integer::intValue).toArray();
         start = list[0];
         end = list[list.length - 1];
-        this.cost = cost;
     }
 
-    public Segment(int[] path, int cost, Data data) {
+    public Segment(int[] path, Data data) {
         this.data = data;
         list = path;
         start = list[0];
         end = list[list.length - 1];
-        this.cost = cost;
     }
 
     /**
@@ -37,41 +34,28 @@ public class Segment {
      * @return 结果
      */
     public Segment connect(Segment segment) {
-        int c = this.cost;
         int[] l;
-        if (data.raw_dist[end][segment.start] < MyParameter.BIG_NUM) {
-            c += (segment.cost + data.raw_dist[end][segment.start]);
+        // 尾首相同
+        if (end == segment.start) {
+            l = ArrayUtils.addAll(this.list, Arrays.copyOfRange(segment.list, 1, segment.list.length));
+        }
+        // 尾首可直接相连
+        else if (data.raw_dist[end][segment.start] < MyParameter.BIG_NUM) {
             l = ArrayUtils.addAll(this.list, segment.list);
-        } else {
+        }
+        // 尾首不可以直接相连
+        else {
             Segment s = data.segments[end][segment.start];
-            c += (segment.cost + s.cost + data.raw_dist[end][s.start] + data.raw_dist[s.end][segment.start]);
-            l = ArrayUtils.addAll(ArrayUtils.addAll(this.list, s.list), segment.list);
+            return connect(s).connect(segment);
         }
-        return new Segment(l, c, this.data);
+        return new Segment(l, this.data);
     }
 
-    public boolean domain(Segment segment) {
-        int object_p = 0;
-        int this_p = 0;
-        while (this_p < list.length) {
-            if (list[this_p] == segment.list[object_p])
-                break;
-            this_p++;
-        }
-        while (this_p < list.length && object_p < segment.list.length) {
-            if (list[this_p] == segment.list[object_p]) {
-                this_p++;
-                object_p++;
-            } else break;
-        }
-        return object_p == segment.list.length;
-    }
-
-    public void calculateDist(Data data) {
-        cost = 0;
-        int pre = list[0];
-        for (int i = 1; i < list.length; i++) {
-            cost += data.raw_dist[pre][list[i]];
+    public Segment connect(Task task) {
+        if (task.type == TaskType.NODE) {
+            return connect(new Segment(new int[]{task.from}, this.data));
+        } else {
+            return connect(new Segment(new int[]{task.from, task.to}, this.data));
         }
     }
 
