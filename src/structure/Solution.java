@@ -39,6 +39,11 @@ public class Solution {
     }
 
     public boolean check_feasible() {
+        if (data.max_vehicles > 0 && routes.size() > data.max_vehicles) {
+            System.out.println("\tvehicles num " + routes.size() + " > " + data.max_vehicles);
+            return false;
+        }
+
         HashSet<Task> task_set = new HashSet<>(Arrays.asList(data.tasks.clone()));
 
         for (Route r : routes) {
@@ -47,19 +52,39 @@ public class Solution {
                 // skip DEPOT
                 if (t.equals(data.depot)) continue;
                 r_load += t.demand;
-                if (t.type==TaskType.EDGE) {
-                    if (!task_set.contains(t) && !task_set.contains(data.get_reverse_edge(t))) return false;
-                }else
-                    if (!task_set.contains(t)) return false;
+                if (t.type == TaskType.EDGE) {
+                    if (!task_set.contains(t) && !task_set.contains(data.get_reverse_edge(t))) {
+                        System.out.println("\tlost task " + t);
+                        return false;
+                    }
+                } else if (!task_set.contains(t)) {
+                    System.out.println("\tlost task " + t);
+                    return false;
+                }
                 task_set.remove(t);
                 task_set.remove(data.get_reverse_edge(t));
             }
-            if (r_load > data.max_capacity) return false;
+            if (r_load > data.max_capacity) {
+                System.out.println("\tcapacity " + r_load + " > " + data.max_capacity);
+                return false;
+            }
             if (!(r.tasks.get(0).equals(data.depot)
-                    && r.tasks.get(r.tasks.size() - 1).equals(data.depot))) return false;
+                    && r.tasks.get(r.tasks.size() - 1).equals(data.depot))) {
+                System.out.println("\tnot from depot to depot");
+                return false;
+            }
         }
 
-        return task_set.isEmpty();
+        if (!task_set.isEmpty()) {
+            System.out.println("\tstill some tasks not serve:");
+            System.out.print("\t");
+            for (Task t : task_set) {
+                System.out.print("\t" + t);
+            }
+            System.out.println();
+            return false;
+        }
+        return true;
     }
 
     public int getDist() {

@@ -10,23 +10,17 @@ public class Main {
             System.out.println("wrong args!");
             System.exit(1);
         } else for (int i = 0; i < args.length; i = i + 2) config(args[i], args[i + 1]);
-        String pre = "src/data/";
-        String[] dir_paths = new String[]{"bhw", "cbmix"};
         Algorithm algo = new Algorithm();
         try {
-            for (String dir_path : dir_paths) {
-                Data[] all_data = ReadData.getAll(pre + dir_path);
-                for (Data data : all_data) {
-//                    data = ReadData.get(pre + dir_path + "/BHW6.dat");
-                    data.show();
-                    data.preprocess();
-                    MyParameter.init(data);
-                    Solution sol = algo.run(data);
-                    WriteData.write(sol, dir_path);
-                    System.out.println(sol);
-                    break;
-                }
-                break;
+            Data[] all_data = ReadData.getAll("src/data");
+            for (Data data : all_data) {
+                data.show();
+                data.preprocess();
+                MyParameter.init(data);
+                Solution sol = algo.run(data);
+                WriteData.write(sol, data);
+                System.out.println(sol);
+//                break;
             }
         } catch (Exception e) {
             e.printStackTrace();

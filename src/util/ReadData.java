@@ -3,39 +3,58 @@ package util;
 import structure.*;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 
 public class ReadData {
 
-    public static Data[] getAll(String dir_path) throws IOException {
-        File dir = new File(dir_path);
-        String[] files_name = dir.list();
-        assert files_name != null;
-        Data[] data = new Data[files_name.length];
-        for (int i = 0; i < files_name.length; i++)
-            data[i] = ReadData.get(dir_path + '/' + files_name[i]);
+    public static File[] getFiles(String path) {
+        List<File> files = new ArrayList<>();
+        Queue<File> queue = new LinkedList<>();
+        File f = new File(path);
+        if (f.isDirectory())
+            queue.offer(f);
+        else files.add(f);
+        while (!queue.isEmpty()) {
+            File folder = queue.poll();
+            File[] subs = folder.listFiles();
+            for (File sub : subs) {
+                if (sub.isDirectory()) queue.offer(sub);
+                else files.add(sub);
+            }
+        }
+        return files.toArray(new File[files.size()]);
+    }
+
+    public static Data[] getAll(String path) throws IOException {
+        File[] files = getFiles(path);
+        Data[] data = new Data[files.length];
+        for (int i = 0; i < files.length; i++)
+            data[i] = ReadData.get(files[i]);
         return data;
     }
 
     public static Data get(String path) throws IOException {
         File file = new File(path);
-        BufferedReader br;
-        br = new BufferedReader(new FileReader(file));
+        return get(file);
+    }
 
+    public static Data get(File file) throws IOException {
         // basic info.
         Data data = new Data();
-        data.name = extract(br.readLine());
-        br.readLine();
-        data.max_vehicles = Integer.parseInt(extract(br.readLine()));
-        data.max_capacity = Integer.parseInt(extract(br.readLine()));
-        data.depot_node = Integer.parseInt(extract(br.readLine()));
-        data.nodes = Integer.parseInt(extract(br.readLine()));
-        data.edges = Integer.parseInt(extract(br.readLine()));
-        data.arcs = Integer.parseInt(extract(br.readLine()));
-        data.nodes_r = Integer.parseInt(extract(br.readLine()));
-        data.edges_r = Integer.parseInt(extract(br.readLine()));
-        data.arcs_r = Integer.parseInt(extract(br.readLine()));
+        Scanner scanner = new Scanner(file);
+        scanner.next();
+        data.name = scanner.next();
+        extract(scanner, 2);
+        System.out.println("loading instance " + data.name);
+        data.max_vehicles = extract(scanner);
+        data.max_capacity = extract(scanner);
+        data.depot_node = extract(scanner, 2);
+        data.nodes = extract(scanner);
+        data.edges = extract(scanner);
+        data.arcs = extract(scanner);
+        data.nodes_r = extract(scanner, 2);
+        data.edges_r = extract(scanner, 2);
+        data.arcs_r = extract(scanner, 2);
 
         data.tasks = new Task[data.nodes_r + data.edges_r + data.arcs_r];
         data.edge_set = new HashMap<>();
@@ -46,74 +65,80 @@ public class ReadData {
         for (int[] a : data.raw_dist)
             Arrays.fill(a, MyParameter.BIG_NUM);
 
-        br.readLine();
-        br.readLine();
+        scanner.next();
+        scanner.nextLine();
 
         // required nodes
         for (int i = 0; i < data.nodes_r; i++)
-            data.tasks[i] = extract(data, br.readLine(), TaskType.NODE, false);
-        br.readLine();
-        br.readLine();
+            data.tasks[i] = extract(data, scanner, TaskType.NODE, false);
+        scanner.next();
+        scanner.nextLine();
 
         // required edges
         for (int i = 0; i < data.edges_r; i++)
-            data.tasks[i + data.nodes_r] = extract(data, br.readLine(), TaskType.EDGE, false);
-        br.readLine();
-        br.readLine();
+            data.tasks[i + data.nodes_r] = extract(data, scanner, TaskType.EDGE, false);
+        scanner.next();
+        scanner.nextLine();
 
         // edges
         for (int i = 0; i < data.edges - data.edges_r; i++)
-            extract(data, br.readLine(), TaskType.EDGE, true);
-        br.readLine();
-        br.readLine();
+            extract(data, scanner, TaskType.EDGE, true);
+        scanner.next();
+        scanner.nextLine();
 
         // required arcs
         for (int i = 0; i < data.arcs_r; i++)
-            data.tasks[i + data.nodes_r + data.edges_r] = extract(data, br.readLine(), TaskType.ARC, false);
-        br.readLine();
-        br.readLine();
+            data.tasks[i + data.nodes_r + data.edges_r] = extract(data, scanner, TaskType.ARC, false);
+        scanner.next();
+        scanner.nextLine();
 
         // arcs
         for (int i = 0; i < data.arcs - data.arcs_r; i++)
-            extract(data, br.readLine(), TaskType.ARC, true);
+            extract(data, scanner, TaskType.ARC, true);
 
-        br.close();
+        scanner.close();
         return data;
     }
 
-    private static String extract(String line) {
-        String[] lines = line.split("\t");
-        return lines[lines.length - 1];
+    private static int extract(Scanner scanner) {
+        scanner.next();
+        return scanner.nextInt();
     }
 
-    private static Task extract(Data data, String line, TaskType type, boolean deadhead) {
-        String[] lines = line.split("\t");
+    private static int extract(Scanner scanner, int repeat) {
+        for (int i = 0; i < repeat; i++)
+            scanner.next();
+        return scanner.nextInt();
+    }
+
+    private static Task extract(Data data, Scanner scanner, TaskType type, boolean deadhead) {
+        String name = scanner.next();
         switch (type) {
             case NODE -> {
-                int node = Integer.parseInt(lines[0].substring(1));
-                int demand = Integer.parseInt(lines[1]);
-                int cost = Integer.parseInt(lines[2]);
-                NodeTask nt = new NodeTask(lines[0], demand, cost, node);
+                int node = Integer.parseInt(name.substring(1));
+                int demand = scanner.nextInt();
+                int cost = scanner.nextInt();
+                NodeTask nt = new NodeTask(name, demand, cost, node);
                 data.graph[node][node] = nt;
                 return nt;
             }
             case EDGE -> {
                 if (deadhead) {
-                    int first = Integer.parseInt(lines[1]);
-                    int second = Integer.parseInt(lines[2]);
-                    int dist = Integer.parseInt(lines[3]);
+                    int first = scanner.nextInt();
+                    int second = scanner.nextInt();
+                    int dist = scanner.nextInt();
                     data.raw_dist[first][second] = data.raw_dist[second][first] = dist;
-                    data.graph[first][second] = new Deadhead(lines[0], first, second, dist);
-                    data.graph[second][first] = new Deadhead(lines[0], second, first, dist);
+                    data.graph[first][second] = new Deadhead(name, first, second, dist);
+                    data.graph[second][first] = new Deadhead(name, second, first, dist);
                 } else {
-                    int first = Integer.parseInt(lines[1]);
-                    int second = Integer.parseInt(lines[2]);
-                    int dist = Integer.parseInt(lines[3]);
-                    int demand = Integer.parseInt(lines[4]);
-                    int cost = Integer.parseInt(lines[5]);
+                    int first = scanner.nextInt();
+                    int second = scanner.nextInt();
+                    int dist = scanner.nextInt();
+                    int demand = scanner.nextInt();
+                    int cost = scanner.nextInt();
                     data.raw_dist[first][second] = data.raw_dist[second][first] = dist;
-                    EdgeTask et = new EdgeTask(lines[0], demand, cost, first, second, dist);
-                    EdgeTask et2 = new EdgeTask(lines[0], demand, cost, second, first, dist);
+                    EdgeTask et = new EdgeTask(name, demand, cost, first, second, dist);
+                    EdgeTask et2 = new EdgeTask(name, demand, cost, second, first, dist);
                     data.graph[first][second] = et;
                     data.graph[second][first] = et2;
                     data.edge_set.put(et, et2);
@@ -123,19 +148,19 @@ public class ReadData {
             }
             case ARC -> {
                 if (deadhead) {
-                    int head = Integer.parseInt(lines[1]);
-                    int tail = Integer.parseInt(lines[2]);
-                    int dist = Integer.parseInt(lines[3]);
+                    int head = scanner.nextInt();
+                    int tail = scanner.nextInt();
+                    int dist = scanner.nextInt();
                     data.raw_dist[head][tail] = dist;
-                    data.graph[head][tail] = new Deadhead(lines[0], head, tail, dist);
+                    data.graph[head][tail] = new Deadhead(name, head, tail, dist);
                 } else {
-                    int head = Integer.parseInt(lines[1]);
-                    int tail = Integer.parseInt(lines[2]);
-                    int dist = Integer.parseInt(lines[3]);
-                    int demand = Integer.parseInt(lines[4]);
-                    int cost = Integer.parseInt(lines[5]);
+                    int head = scanner.nextInt();
+                    int tail = scanner.nextInt();
+                    int dist = scanner.nextInt();
+                    int demand = scanner.nextInt();
+                    int cost = scanner.nextInt();
                     data.raw_dist[head][tail] = dist;
-                    ArcTask at = new ArcTask(lines[0], demand, cost, head, tail, dist);
+                    ArcTask at = new ArcTask(name, demand, cost, head, tail, dist);
                     data.graph[head][tail] = at;
                     return at;
                 }

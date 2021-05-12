@@ -43,6 +43,7 @@ public class Initialization {
                     if (r.merge(route_pool.get(j))) {
                         has_domain = true;
                         route_pool.remove(j);
+                        break;
                     } else j++;
                 }
             }
@@ -79,6 +80,15 @@ public class Initialization {
         return s;
     }
 
+    /**
+     * step 1: first fit构造初始解
+     * step 2: 领域搜索（VNS），基于两个内部迭代过程
+     *      step 2.1: MOVE，在两个bin中交换task，依据（1）满足约束；（2）不平衡指标增大(i->h, load_h > load_i — w_j)，
+     *              然后从头开始，直到上下界相同或者没有可行的操作
+     *      step 2.2: SWAP(w_h > w_j && load_h — w_h > load_j — w_j)，交换两个bin中的task
+     * step 3: 不断执行（1）MOVE和（2）SWAP来重复搜索过程，直到上下界相同或者两个算子都没有可行的操作
+     * step 4: 对于每个bin中的task使用贪婪方法插入
+     */
     public Solution binPacking(Data data) {
         // TODO
         return null;
