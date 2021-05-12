@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Route {
 
-    private final Data data;
+    public final Data data;
 
     public int dist = 0;
     public int load = 0;
@@ -94,6 +94,24 @@ public class Route {
             case ARC -> arcs--;
         }
         return t;
+    }
+
+    public boolean greedyAdd(Task t) {
+        if (t.demand + this.load > data.max_capacity) return false;
+        int best_change = Integer.MAX_VALUE;
+        int best_pos = -1;
+        for (int insert = 1; insert < tasks.size(); insert++) {
+            int pre = tasks.get(insert - 1).to;
+            int next = tasks.get(insert).from;
+            int cost = data.dist[pre][t.from] + t.dist + data.dist[t.to][next] - data.dist[pre][next];
+            if (cost < best_change) {
+                best_change = cost;
+                best_pos = insert;
+            }
+        }
+        if (best_pos == -1) return false;
+        add(t, best_pos);
+        return true;
     }
 
     public void reverse_all_edge_tasks() {

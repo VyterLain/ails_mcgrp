@@ -20,24 +20,29 @@ public class FunctionTest {
 //            MyParameter.init(data);
 
             Data[] data = test_read();
-            test_initial(data);
-//            test_segment(data);
-//            test_route_function(data);
-//            test_destroy_repair(data);
-//            test_ls_operators(data);
-//            test_main_algorithm_structure(data);
+            for (Data d : data) {
+                test_initial(d);
+//                test_segment(d);
+//                test_route_function(d);
+//                test_destroy_repair(d);
+//                test_ls_operators(d);
+//                test_main_algorithm_structure(d);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private static void test_initial(Data[] data) {
+    private static void test_initial(Data data) {
         Initialization init = new Initialization();
-        for (Data d : data) {
-            System.out.println("augment merge inst " + d.name);
-            Solution s = init.augmentMerge(d);
-            if (!s.check_feasible()) System.out.println("false initial " + d.name);
-        }
+//            System.out.println("augment merge inst " + d.name);
+//            System.out.println(init.augmentMerge(d));
+//            System.out.println("bin packing inst " + d.name);
+//            System.out.println(init.binPacking(d));
+        System.out.println("article way inst " + data.name);
+        Solution s = init.articleWay(data);
+        if (!s.check_feasible()) System.out.println("false initial " + data.name);
+        System.out.println(s);
     }
 
     private static void test_segment(Data data) {
@@ -61,8 +66,9 @@ public class FunctionTest {
 //        File file =new File("src/data/bhw/BHW1.dat");
 //        File file = new File("src/data/mgval_50/mgval_0.50_9D.dat");
 //        Data data = ReadData.get(file);
-        Data[] data = ReadData.getAll("src/data");
-//        Data[] data = ReadData.getAll("src/data/mgval_50/mgval_0.50_9D.dat");
+//        Data[] data = ReadData.getAll("src/data");
+//        Data[] data = ReadData.getAll("src/data/mgval_50/mgval_0.50_10A.dat");
+        Data[] data = ReadData.getAll("src/data/mggdb_45/mggdb_0.45_13.dat");
         for (Data d : data) {
 //            d.show();
             System.out.println("start preprocessing " + d.name);
@@ -94,7 +100,8 @@ public class FunctionTest {
     }
 
     private static void test_main_algorithm_structure(Data data) {
-
+        MyParameter.init(data);
+        MyParameter.setRunningTime(5);
         Algorithm algo = new Algorithm();
         Solution sol = algo.run(data);
         sol.getDist();

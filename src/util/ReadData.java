@@ -55,47 +55,40 @@ public class ReadData {
         data.nodes_r = extract(scanner, 2);
         data.edges_r = extract(scanner, 2);
         data.arcs_r = extract(scanner, 2);
-
         data.tasks = new Task[data.nodes_r + data.edges_r + data.arcs_r];
+        // edge map
         data.edge_set = new HashMap<>();
-
+        // task graph
         data.graph = new Task[data.nodes + 1][data.nodes + 1];
-
+        // raw distance matrix
         data.raw_dist = new int[data.nodes + 1][data.nodes + 1];
         for (int[] a : data.raw_dist)
             Arrays.fill(a, MyParameter.BIG_NUM);
-
         scanner.next();
         scanner.nextLine();
-
         // required nodes
         for (int i = 0; i < data.nodes_r; i++)
             data.tasks[i] = extract(data, scanner, TaskType.NODE, false);
         scanner.next();
         scanner.nextLine();
-
         // required edges
         for (int i = 0; i < data.edges_r; i++)
             data.tasks[i + data.nodes_r] = extract(data, scanner, TaskType.EDGE, false);
         scanner.next();
         scanner.nextLine();
-
         // edges
         for (int i = 0; i < data.edges - data.edges_r; i++)
             extract(data, scanner, TaskType.EDGE, true);
         scanner.next();
         scanner.nextLine();
-
         // required arcs
         for (int i = 0; i < data.arcs_r; i++)
             data.tasks[i + data.nodes_r + data.edges_r] = extract(data, scanner, TaskType.ARC, false);
         scanner.next();
         scanner.nextLine();
-
         // arcs
         for (int i = 0; i < data.arcs - data.arcs_r; i++)
             extract(data, scanner, TaskType.ARC, true);
-
         scanner.close();
         return data;
     }
@@ -123,17 +116,14 @@ public class ReadData {
                 return nt;
             }
             case EDGE -> {
+                int first = scanner.nextInt();
+                int second = scanner.nextInt();
+                int dist = scanner.nextInt();
                 if (deadhead) {
-                    int first = scanner.nextInt();
-                    int second = scanner.nextInt();
-                    int dist = scanner.nextInt();
                     data.raw_dist[first][second] = data.raw_dist[second][first] = dist;
                     data.graph[first][second] = new Deadhead(name, first, second, dist);
                     data.graph[second][first] = new Deadhead(name, second, first, dist);
                 } else {
-                    int first = scanner.nextInt();
-                    int second = scanner.nextInt();
-                    int dist = scanner.nextInt();
                     int demand = scanner.nextInt();
                     int cost = scanner.nextInt();
                     data.raw_dist[first][second] = data.raw_dist[second][first] = dist;
@@ -147,16 +137,13 @@ public class ReadData {
                 }
             }
             case ARC -> {
+                int head = scanner.nextInt();
+                int tail = scanner.nextInt();
+                int dist = scanner.nextInt();
                 if (deadhead) {
-                    int head = scanner.nextInt();
-                    int tail = scanner.nextInt();
-                    int dist = scanner.nextInt();
                     data.raw_dist[head][tail] = dist;
                     data.graph[head][tail] = new Deadhead(name, head, tail, dist);
                 } else {
-                    int head = scanner.nextInt();
-                    int tail = scanner.nextInt();
-                    int dist = scanner.nextInt();
                     int demand = scanner.nextInt();
                     int cost = scanner.nextInt();
                     data.raw_dist[head][tail] = dist;
