@@ -21,12 +21,12 @@ public class FunctionTest {
 
             Data[] data = test_read();
             for (Data d : data) {
-                test_initial(d);
+//                test_initial(d);
 //                test_segment(d);
 //                test_route_function(d);
 //                test_destroy_repair(d);
 //                test_ls_operators(d);
-//                test_main_algorithm_structure(d);
+                test_main_algorithm_structure(d);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -67,8 +67,8 @@ public class FunctionTest {
 //        File file = new File("src/data/mgval_50/mgval_0.50_9D.dat");
 //        Data data = ReadData.get(file);
 //        Data[] data = ReadData.getAll("src/data");
-//        Data[] data = ReadData.getAll("src/data/mgval_50/mgval_0.50_10A.dat");
-        Data[] data = ReadData.getAll("src/data/mggdb_45/mggdb_0.45_13.dat");
+        Data[] data = ReadData.getAll("src/data/bhw/BHW6.dat");
+//        Data[] data = ReadData.getAll("src/data/mggdb_45/mggdb_0.45_13.dat");
         for (Data d : data) {
 //            d.show();
             System.out.println("start preprocessing " + d.name);

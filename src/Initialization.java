@@ -11,10 +11,10 @@ public class Initialization {
         if (data.max_vehicles > 0 && s.routes.size() > data.max_vehicles) {
             s = binPacking(s);
 //            s = binPacking(data);
-        }
-        if (s.routes.size() > s.data.max_vehicles) {
-            System.out.println("oops, heuristic bin packing failed");
-            s = gurobi_way(data);
+            if (s.routes.size() > s.data.max_vehicles) {
+                System.out.println("oops, heuristic bin packing failed");
+                s = gurobi_way(data);
+            }
         }
         return s;
     }
