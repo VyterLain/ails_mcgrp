@@ -10,6 +10,8 @@ import java.util.Set;
 
 public abstract class Constructor {
 
+    // todo: when doing construction, we need consider the constraints of vehicle number
+
     public Random random = MyParameter.random;
 
     public abstract void construct(List<Task> remains, Solution sol);

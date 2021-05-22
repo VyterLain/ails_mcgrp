@@ -12,8 +12,8 @@ public class WriteData {
     public static void write(Solution s, Data data) throws IOException {
         s.getDist();
         if (!s.check_feasible()) {
-            System.out.println("wrong! infeasible solution occured");
-            System.exit(1);
+            System.out.println(data.name + " wrong! infeasible solution occured");
+            return;
         }
         String path = "src/output/" + data.name + '_' + (int) MyParameter.running_time + ".txt";
         File wf = new File(path);

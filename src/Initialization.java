@@ -1,3 +1,4 @@
+import gurobi.*;
 import structure.*;
 
 import java.util.ArrayList;
@@ -20,9 +21,63 @@ public class Initialization {
     }
 
     private Solution gurobi_way(Data data) {
-        // todo
+
         System.out.println("trying to use gurobi");
-        return null;
+        try {
+            GRBEnv env = new GRBEnv(true);
+//            env.set("LogFile", "initial_gurobi.log");
+            env.start();
+            GRBModel model = new GRBModel(env);
+            model.set(GRB.IntParam.OutputFlag, 0);
+
+            GRBVar G = model.addVar(0, data.max_capacity, 0, GRB.CONTINUOUS, "G");
+            GRBVar[][] x = new GRBVar[data.tasks.length][data.max_vehicles];
+            for (int i = 0; i < x.length; i++) {
+                for (int j = 0; j < x[i].length; j++) {
+                    x[i][j] = model.addVar(0, 1, 0, GRB.BINARY, "x_{" + i + "," + j + "}");
+                }
+            }
+
+            for (int i = 0; i < x.length; i++) {
+                GRBLinExpr expr = new GRBLinExpr();
+                for (int k = 0; k < x[i].length; k++) {
+                    expr.addTerm(1, x[i][k]);
+                }
+                model.addConstr(expr, GRB.EQUAL, 1, "constr serve once for i=" + i);
+            }
+
+            for (int k = 0; k < x[0].length; k++) {
+                GRBLinExpr expr = new GRBLinExpr();
+                for (int i = 0; i < x.length; i++) {
+                    expr.addTerm(data.tasks[i].demand, x[i][k]);
+                }
+                expr.addTerm(-1, G);
+                model.addConstr(expr, GRB.LESS_EQUAL, 0, "constr capacity for k=" + k);
+            }
+
+            GRBLinExpr obj = new GRBLinExpr();
+            obj.addTerm(1, G);
+            model.setObjective(obj, GRB.MINIMIZE);
+            model.optimize();
+
+            Solution s = new Solution(data);
+            for (int k = 0; k < x[0].length; k++) {
+                Route r = new Route(data);
+                r.add(data.depot);
+                for (int i = 0; i < x.length; i++) {
+                    if (x[i][k].get(GRB.DoubleAttr.X) == 1) {
+                        r.greedyAdd(data.tasks[i]);
+                    }
+                }
+                s.add(r);
+            }
+
+            return s;
+
+        } catch (GRBException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public Solution augmentMerge(Data data) {

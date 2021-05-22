@@ -45,7 +45,7 @@ public class ReadData {
         scanner.next();
         data.name = scanner.next();
         extract(scanner, 2);
-        System.out.println("loading instance " + data.name);
+//        System.out.println("loading instance " + data.name);
         data.max_vehicles = extract(scanner);
         data.max_capacity = extract(scanner);
         data.depot_node = extract(scanner, 2);

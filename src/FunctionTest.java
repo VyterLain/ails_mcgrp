@@ -1,11 +1,11 @@
 import structure.*;
 import util.MyParameter;
 import util.ReadData;
+import util.WriteData;
 import util.destroy.*;
 import util.local_search.*;
 import util.repair.*;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -22,10 +22,6 @@ public class FunctionTest {
             Data[] data = test_read();
             for (Data d : data) {
 //                test_initial(d);
-//                test_segment(d);
-//                test_route_function(d);
-//                test_destroy_repair(d);
-//                test_ls_operators(d);
                 test_main_algorithm_structure(d);
             }
         } catch (Exception e) {
@@ -41,20 +37,8 @@ public class FunctionTest {
 //            System.out.println(init.binPacking(d));
         System.out.println("article way inst " + data.name);
         Solution s = init.articleWay(data);
-        if (!s.check_feasible()) System.out.println("false initial " + data.name);
-        System.out.println(s);
-    }
-
-    private static void test_segment(Data data) {
-        Segment s1 = new Segment(new int[]{6, 4, 3, 2, 1, 8, 9}, data);
-        Segment s2 = new Segment(new int[]{3, 2, 1, 8}, data);
-        Segment s3 = new Segment(new int[]{4, 3, 1, 9}, data);
-        Segment s4 = new Segment(new int[]{1, 8, 9, 5}, data);
-        Segment s5 = new Segment(new int[]{4}, data);
-        Segment s6 = new Segment(new int[]{7, 4}, data);
-        System.out.println(s6 + " connect " + s5 + " is " + s6.connect(s5));
-        System.out.println(s1 + " connect " + data.tasks[3] + " is " + s1.connect(data.tasks[3]));
-        System.out.println(s1 + " connect " + data.tasks[12] + " is " + s1.connect(data.tasks[12]));
+        if (!s.check_feasible()) System.out.println("\t\tfalse initial " + data.name);
+//        System.out.println(s);
     }
 
     private static void test_running_efficiency(Data data) {
@@ -62,16 +46,12 @@ public class FunctionTest {
     }
 
     private static Data[] test_read() throws IOException {
-//        File file = new File("src/data/di-nearp/DI-NEARP-n699-Q4k.dat");
-//        File file =new File("src/data/bhw/BHW1.dat");
-//        File file = new File("src/data/mgval_50/mgval_0.50_9D.dat");
-//        Data data = ReadData.get(file);
-//        Data[] data = ReadData.getAll("src/data");
+//        Data[] data = ReadData.getAll("src/data/mgval");
         Data[] data = ReadData.getAll("src/data/bhw/BHW6.dat");
 //        Data[] data = ReadData.getAll("src/data/mggdb_45/mggdb_0.45_13.dat");
         for (Data d : data) {
 //            d.show();
-            System.out.println("start preprocessing " + d.name);
+//            System.out.println("start preprocessing " + d.name);
             d.preprocess();
         }
         return data;
@@ -99,15 +79,18 @@ public class FunctionTest {
 
     }
 
-    private static void test_main_algorithm_structure(Data data) {
+    private static void test_main_algorithm_structure(Data data) throws IOException {
+        System.out.println("******* starting ls...");
         MyParameter.init(data);
-        MyParameter.setRunningTime(5);
+        MyParameter.setRunningTime(3600);
+        MyParameter.setRandomSeed(1);
         Algorithm algo = new Algorithm();
         Solution sol = algo.run(data);
         sol.getDist();
-        System.out.println(sol);
-        System.out.println("solution feasibility => " + sol.check_feasible());
-
+//        System.out.println(sol);
+//        System.out.println("solution feasibility => " + sol.check_feasible());
+        WriteData.write(sol, data);
+        System.out.println(data.name + " done");
     }
 
     private static void test_route_function(Data data) {
